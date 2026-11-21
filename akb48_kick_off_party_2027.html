@@ -1,0 +1,3338 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>AKB48 コール予習帳 | KICK OFF PARTY 2027 in YOYOGI</title>
+  <style>
+    /* ============================================================
+       1. テーマカラー定義（デフォルト：LIVE Memory風ダークテーマ）
+       ============================================================ */
+    :root,
+    [data-theme="dark"] {
+      --bg-page: #0d0f14;
+      --bg-surface: #161922;
+      --bg-surface-2: #1e222e;
+      --bg-surface-3: #272d3d;
+      --bg-header: rgba(13, 15, 20, 0.94);
+      --border: #262c3b;
+      --border-strong: #374054;
+      --text-main: #f3f4f6;
+      --text-sub: #cbd5e1;
+      --text-muted: #8b95a9;
+      --accent: #ff2d78;
+      --accent-soft: rgba(255, 45, 120, 0.14);
+      --accent-border: rgba(255, 45, 120, 0.42);
+      --lime: #4ade80;
+      --lime-soft: rgba(74, 222, 128, 0.15);
+      --lime-border: rgba(74, 222, 128, 0.45);
+      --cyan: #38bdf8;
+      --cyan-soft: rgba(56, 189, 248, 0.14);
+      --cyan-border: rgba(56, 189, 248, 0.4);
+      --amber: #fbbf24;
+      --amber-soft: rgba(251, 191, 36, 0.15);
+      --amber-border: rgba(251, 191, 36, 0.4);
+      --spotify: #1db954;
+      --apple: #fa2d48;
+      --danger: #f87171;
+      --danger-soft: rgba(248, 113, 113, 0.14);
+      --danger-border: rgba(248, 113, 113, 0.4);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
+      --shadow-lg: 0 18px 42px rgba(0, 0, 0, 0.65);
+    }
+
+    [data-theme="light"] {
+      --bg-page: #f5f7fa;
+      --bg-surface: #ffffff;
+      --bg-surface-2: #f8fafc;
+      --bg-surface-3: #eef2f6;
+      --bg-header: rgba(255, 255, 255, 0.94);
+      --border: #e2e8f0;
+      --border-strong: #cbd5e1;
+      --text-main: #0f172a;
+      --text-sub: #334155;
+      --text-muted: #64748b;
+      --accent: #e11d48;
+      --accent-soft: #fff1f2;
+      --accent-border: #fda4af;
+      --lime: #15803d;
+      --lime-soft: #dcfce7;
+      --lime-border: #86efac;
+      --cyan: #0369a1;
+      --cyan-soft: #e0f2fe;
+      --cyan-border: #7dd3fc;
+      --amber: #b45309;
+      --amber-soft: #fef3c7;
+      --amber-border: #fcd34d;
+      --spotify: #16a34a;
+      --apple: #e11d48;
+      --danger: #dc2626;
+      --danger-soft: #fef2f2;
+      --danger-border: #fca5a5;
+      --shadow-sm: 0 2px 6px rgba(15, 23, 42, 0.06);
+      --shadow-lg: 0 16px 36px rgba(15, 23, 42, 0.2);
+    }
+
+    /* ============================================================
+       2. ベーススタイル
+       ============================================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
+      line-height: 1.5;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    body.modal-open {
+      overflow: hidden;
+    }
+
+    button, input, textarea {
+      font-family: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      padding: 0;
+      color: var(--text-main);
+    }
+
+    button:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    /* ============================================================
+       3. コンパクトヘッダー＆進捗バー
+       ============================================================ */
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background-color: var(--bg-header);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .header-inner {
+      padding: 10px 14px;
+    }
+
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .brand-wrap {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .event-badge {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 6px;
+      background-color: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid var(--accent-border);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      margin-bottom: 3px;
+    }
+
+    .app-title {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 900;
+      color: var(--text-main);
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .btn-icon-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      height: 36px;
+      padding: 0 11px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 800;
+      background-color: var(--bg-surface-2);
+      border: 1px solid var(--border-strong);
+      color: var(--text-main);
+      transition: transform 0.1s ease;
+    }
+
+    .btn-icon-pill:active {
+      transform: scale(0.95);
+    }
+
+    .btn-icon-pill.accent {
+      background-color: var(--accent-soft);
+      border-color: var(--accent-border);
+      color: var(--accent);
+    }
+
+    .btn-icon-only {
+      width: 36px;
+      padding: 0;
+      font-size: 16px;
+    }
+
+    /* 進捗バー（スリム設計） */
+    .progress-bar-wrap {
+      margin-top: 9px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .progress-text {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-sub);
+      white-space: nowrap;
+    }
+
+    .progress-text strong {
+      color: var(--accent);
+      font-size: 13px;
+    }
+
+    .progress-track {
+      flex: 1;
+      height: 6px;
+      border-radius: 999px;
+      background-color: var(--bg-surface-3);
+      overflow: hidden;
+      display: flex;
+    }
+
+    .progress-fill-done {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), #ff70a6);
+      transition: width 0.25s ease;
+    }
+
+    .progress-fill-practicing {
+      height: 100%;
+      background-color: var(--amber);
+      transition: width 0.25s ease;
+    }
+
+    .progress-pct {
+      font-size: 11px;
+      font-weight: 900;
+      color: var(--lime);
+      min-width: 30px;
+      text-align: right;
+    }
+
+    /* ============================================================
+       4. 検索・スッキリ絞り込みエリア
+       ============================================================ */
+    .controls-section {
+      padding: 12px 14px 4px;
+    }
+
+    .search-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      font-size: 14px;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      height: 40px;
+      padding: 0 36px 0 36px;
+      border-radius: 12px;
+      border: 1px solid var(--border-strong);
+      background-color: var(--bg-surface);
+      color: var(--text-main);
+      font-size: 14px;
+      outline: none;
+    }
+
+    .search-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .search-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+
+    .search-clear {
+      position: absolute;
+      right: 8px;
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background-color: var(--bg-surface-3);
+      color: var(--text-sub);
+      font-size: 14px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .toolbar-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 9px;
+    }
+
+    .view-segment {
+      display: inline-flex;
+      padding: 3px;
+      border-radius: 10px;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border);
+      gap: 2px;
+    }
+
+    .view-seg-btn {
+      padding: 5px 11px;
+      border-radius: 7px;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text-muted);
+    }
+
+    .view-seg-btn.active {
+      background-color: var(--accent);
+      color: #ffffff;
+    }
+
+    .fold-btns {
+      display: inline-flex;
+      gap: 5px;
+    }
+
+    .mini-text-btn {
+      padding: 4px 8px;
+      border-radius: 7px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border);
+    }
+
+    /* 横スクロールフィルター */
+    .filter-scroll {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 9px 0 2px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .filter-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .chip-btn {
+      flex-shrink: 0;
+      height: 32px;
+      padding: 0 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      background-color: var(--bg-surface);
+      color: var(--text-sub);
+      border: 1px solid var(--border-strong);
+      white-space: nowrap;
+      transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .chip-btn.active {
+      background-color: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
+    }
+
+    .chip-btn.active-sub {
+      background-color: var(--cyan-soft);
+      color: var(--cyan);
+      border-color: var(--cyan-border);
+    }
+
+    .sub-filter-box {
+      margin-top: 6px;
+      padding: 6px 10px 8px;
+      border-radius: 12px;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border);
+    }
+
+    .sub-filter-title {
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .list-meta-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 8px;
+      padding: 0 2px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* ============================================================
+       5. 曲リスト＆グループアコーディオン
+       ============================================================ */
+    .song-list-wrap {
+      padding: 8px 14px 56px;
+    }
+
+    .song-list {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .group-section {
+      border-radius: 14px;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .group-header-btn {
+      width: 100%;
+      padding: 11px 13px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      text-align: left;
+      background-color: var(--bg-surface-2);
+    }
+
+    .group-section.open .group-header-btn {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .group-head-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .cat-pill {
+      flex-shrink: 0;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 800;
+      border: 1px solid var(--border-strong);
+    }
+
+    .cat-team   { background: var(--accent-soft); color: var(--accent); border-color: var(--accent-border); }
+    .cat-single { background: var(--cyan-soft);   color: var(--cyan);   border-color: var(--cyan-border); }
+    .cat-album  { background: var(--amber-soft);  color: var(--amber);  border-color: var(--amber-border); }
+    .cat-unit   { background: var(--lime-soft);   color: var(--lime);   border-color: var(--lime-border); }
+
+    .group-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-main);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .group-head-right {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      flex-shrink: 0;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .group-head-right strong {
+      color: var(--lime);
+    }
+
+    .group-chevron {
+      font-size: 10px;
+      transition: transform 0.2s ease;
+    }
+
+    .group-section.open .group-chevron {
+      transform: rotate(180deg);
+    }
+
+    .group-songs {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      padding: 7px;
+    }
+
+    .group-section.open .group-songs {
+      display: flex;
+    }
+
+    /* 曲カード */
+    .song-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 9px 10px;
+      border-radius: 12px;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: transform 0.1s ease, border-color 0.15s ease;
+    }
+
+    .group-songs .song-card {
+      background-color: var(--bg-page);
+    }
+
+    .song-card:active {
+      transform: scale(0.99);
+    }
+
+    .song-card.status-done {
+      border-color: var(--accent-border);
+    }
+
+    .song-card-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .song-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+      background-color: var(--bg-surface-3);
+      color: var(--text-sub);
+      font-size: 12px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .song-card.status-done .song-num {
+      background-color: var(--accent);
+      color: #ffffff;
+    }
+
+    .song-info {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .song-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .song-badges {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 3px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 1px 6px;
+      border-radius: 5px;
+      font-size: 10px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .badge-group    { background: var(--bg-surface-3); color: var(--text-muted); }
+    .badge-call     { background: var(--accent-soft);  color: var(--accent); }
+    .badge-media    { background: var(--cyan-soft);    color: var(--cyan); }
+    .badge-penlight { background: var(--amber-soft);   color: var(--amber); }
+
+    .quick-status-btn {
+      flex-shrink: 0;
+      width: 52px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 800;
+      border: 1px solid var(--border-strong);
+      background-color: var(--bg-surface-2);
+      color: var(--text-muted);
+    }
+
+    .quick-status-btn:active {
+      transform: scale(0.92);
+    }
+
+    .quick-status-btn.st-practicing {
+      background-color: var(--amber-soft);
+      color: var(--amber);
+      border-color: var(--amber-border);
+    }
+
+    .quick-status-btn.st-done {
+      background-color: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 32px 16px;
+      border-radius: 14px;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border);
+    }
+
+    .empty-state p {
+      margin: 5px 0;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* 汎用ボタン */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 9px 14px;
+      border-radius: 10px;
+      background-color: var(--accent);
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      background-color: var(--bg-surface-2);
+      color: var(--text-main);
+      border: 1px solid var(--border-strong);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    /* ============================================================
+       6. モーダル共通
+       ============================================================ */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      background-color: rgba(0, 0, 0, 0.74);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    @media (min-width: 640px) {
+      .modal-overlay {
+        align-items: center;
+        padding: 16px;
+      }
+    }
+
+    .modal-sheet {
+      width: 100%;
+      max-width: 740px;
+      max-height: 94vh;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 20px 20px 0 0;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    @media (min-width: 640px) {
+      .modal-sheet {
+        border-radius: 20px;
+        max-height: 90vh;
+      }
+    }
+
+    .modal-header {
+      padding: 13px 15px 11px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .modal-close-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+      background-color: var(--bg-surface-3);
+      color: var(--text-sub);
+      font-size: 18px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .modal-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 13px 15px 20px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .modal-footer {
+      padding: 9px 15px;
+      border-top: 1px solid var(--border);
+      background-color: var(--bg-surface-2);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    /* ============================================================
+       7. 曲詳細モーダル（閲覧ファースト・スッキリ構成）
+       ============================================================ */
+    .detail-head-left {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .detail-num {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      background-color: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid var(--accent-border);
+      font-size: 13px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .detail-title {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 1.3;
+      word-break: break-word;
+    }
+
+    .detail-sub-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .status-segment {
+      display: inline-flex;
+      padding: 2px;
+      border-radius: 9px;
+      background-color: var(--bg-surface-2);
+      border: 1px solid var(--border);
+      gap: 2px;
+    }
+
+    .status-seg-btn {
+      padding: 4px 10px;
+      border-radius: 7px;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text-muted);
+    }
+
+    .status-seg-btn.active-todo       { background-color: var(--bg-surface-3); color: var(--text-main); }
+    .status-seg-btn.active-practicing { background-color: var(--amber);        color: #111827; }
+    .status-seg-btn.active-done       { background-color: var(--accent);       color: #ffffff; }
+
+    /* マルチ音源プレイヤーカード */
+    .media-card {
+      padding: 10px;
+      border-radius: 14px;
+      background-color: var(--bg-surface-2);
+      border: 1px solid var(--border);
+      margin-bottom: 12px;
+    }
+
+    .source-tabs {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 8px;
+    }
+
+    .source-tab-btn {
+      flex: 1;
+      padding: 6px 8px;
+      border-radius: 9px;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text-muted);
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .source-tab-btn.active-yt      { background: var(--accent-soft); color: var(--accent); border-color: var(--accent-border); }
+    .source-tab-btn.active-spotify { background: rgba(29, 185, 84, 0.16); color: var(--spotify); border-color: rgba(29, 185, 84, 0.45); }
+    .source-tab-btn.active-apple   { background: rgba(250, 45, 72, 0.16); color: var(--apple); border-color: rgba(250, 45, 72, 0.45); }
+
+    .yt-frame-wrap {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%;
+      border-radius: 10px;
+      overflow: hidden;
+      background-color: #000000;
+      transition: padding-top 0.2s ease;
+    }
+
+    .yt-frame-wrap.compact {
+      padding-top: 30%;
+    }
+
+    .yt-frame-mount {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .yt-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    .yt-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .time-pill {
+      padding: 2px 8px;
+      border-radius: 7px;
+      background-color: var(--cyan-soft);
+      color: var(--cyan);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-weight: 800;
+      font-size: 11px;
+    }
+
+    .yt-bar-links {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+
+    .tiny-pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 4px 8px;
+      border-radius: 7px;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-strong);
+      color: var(--text-sub);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .embed-frame-spotify {
+      width: 100%;
+      height: 152px;
+      border: 0;
+      border-radius: 12px;
+      display: block;
+    }
+
+    .embed-frame-apple {
+      width: 100%;
+      height: 175px;
+      border: 0;
+      border-radius: 12px;
+      display: block;
+      background: transparent;
+    }
+
+    .no-media-box {
+      padding: 14px 10px;
+      text-align: center;
+    }
+
+    .no-media-box p {
+      margin: 0 0 10px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .no-media-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    /* ペンライト・メモのコンパクトバッジ */
+    .memo-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .memo-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 9px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      background-color: var(--amber-soft);
+      color: var(--amber);
+      border: 1px solid var(--amber-border);
+    }
+
+    .memo-chip.note {
+      background-color: var(--bg-surface-2);
+      color: var(--text-sub);
+      border-color: var(--border-strong);
+    }
+
+    /* 閲覧 / 編集の2タブ */
+    .detail-tabs {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 11px;
+    }
+
+    .detail-tab-btns {
+      display: flex;
+      gap: 4px;
+    }
+
+    .detail-tab-btn {
+      padding: 8px 13px;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-muted);
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+    }
+
+    .detail-tab-btn.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .auto-follow-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    /* 同期コール表示 */
+    .call-lines {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .call-spacer {
+      height: 3px;
+    }
+
+    .call-heading {
+      display: inline-block;
+      margin-top: 5px;
+      padding: 3px 9px;
+      border-radius: 7px;
+      background-color: var(--bg-surface-3);
+      color: var(--text-sub);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .call-box {
+      padding: 9px 12px;
+      border-radius: 11px;
+      background-color: var(--accent-soft);
+      border: 1px solid var(--accent-border);
+      color: var(--text-main);
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.55;
+      word-break: break-word;
+    }
+
+    .memo-line {
+      padding: 2px 6px;
+      color: var(--text-muted);
+      font-size: 13px;
+      line-height: 1.55;
+      word-break: break-word;
+    }
+
+    .ts-line-btn {
+      width: 100%;
+      text-align: left;
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      padding: 9px 11px;
+      border-radius: 11px;
+      border: 1px solid var(--border);
+      background-color: var(--bg-surface-2);
+      color: var(--text-sub);
+      font-size: 13px;
+      line-height: 1.55;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .ts-line-btn.is-call {
+      background-color: var(--accent-soft);
+      border-color: var(--accent-border);
+      color: var(--text-main);
+      font-weight: 800;
+    }
+
+    .ts-line-btn.ts-active {
+      background-color: var(--accent-soft);
+      border-color: var(--accent);
+      box-shadow: inset 4px 0 0 var(--accent);
+      color: var(--text-main);
+      font-weight: 800;
+    }
+
+    .ts-line-btn.ts-next {
+      border-color: var(--lime-border);
+    }
+
+    .ts-tag {
+      flex-shrink: 0;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 11px;
+      font-weight: 800;
+      background-color: var(--cyan-soft);
+      color: var(--cyan);
+      margin-top: 1px;
+    }
+
+    .ts-line-btn.ts-active .ts-tag {
+      background-color: var(--accent);
+      color: #ffffff;
+    }
+
+    .ts-body {
+      flex: 1;
+      min-width: 0;
+      word-break: break-word;
+    }
+
+    .countdown-badge {
+      display: inline-flex;
+      align-items: center;
+      margin-left: 7px;
+      padding: 1px 7px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 900;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      background-color: var(--lime-soft);
+      color: var(--lime);
+      border: 1px solid var(--lime-border);
+      vertical-align: middle;
+    }
+
+    /* ============================================================
+       8. 編集・音源設定ペイン（普段は隠れている詳細画面）
+       ============================================================ */
+    .edit-group {
+      padding: 11px 12px;
+      border-radius: 12px;
+      background-color: var(--bg-surface-2);
+      border: 1px solid var(--border);
+      margin-bottom: 10px;
+    }
+
+    .edit-group-title {
+      margin: 0 0 8px;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-sub);
+    }
+
+    .field-block {
+      margin-bottom: 8px;
+    }
+
+    .field-block:last-child {
+      margin-bottom: 0;
+    }
+
+    .field-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .text-input {
+      width: 100%;
+      height: 36px;
+      padding: 0 10px;
+      border-radius: 9px;
+      border: 1px solid var(--border-strong);
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      font-size: 12px;
+      outline: none;
+    }
+
+    .text-input:focus {
+      border-color: var(--accent);
+    }
+
+    .insert-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-bottom: 8px;
+    }
+
+    .tpl-btn {
+      padding: 6px 9px;
+      border-radius: 8px;
+      background-color: var(--bg-surface);
+      color: var(--text-sub);
+      border: 1px solid var(--border-strong);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .tpl-btn.accent {
+      background-color: var(--accent-soft);
+      color: var(--accent);
+      border-color: var(--accent-border);
+    }
+
+    .editor-textarea {
+      width: 100%;
+      min-height: 185px;
+      padding: 11px;
+      border-radius: 10px;
+      border: 1px solid var(--border-strong);
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      font-size: 13px;
+      line-height: 1.6;
+      resize: vertical;
+      outline: none;
+    }
+
+    .editor-textarea:focus {
+      border-color: var(--accent);
+    }
+
+    .editor-hint {
+      margin: 6px 0 0;
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .edit-actions-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    /* ============================================================
+       9. 辞典・設定モーダル
+       ============================================================ */
+    .info-card {
+      padding: 12px 13px;
+      border-radius: 13px;
+      background-color: var(--bg-surface-2);
+      border: 1px solid var(--border);
+      margin-bottom: 10px;
+    }
+
+    .info-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 5px;
+    }
+
+    .info-card-title {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .info-card-desc {
+      margin: 0 0 8px;
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .info-card-pre {
+      padding: 10px 11px;
+      border-radius: 9px;
+      background-color: var(--bg-page);
+      border: 1px solid var(--border);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-main);
+      white-space: pre-wrap;
+      line-height: 1.65;
+    }
+
+    .theme-switch-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .theme-opt-btn {
+      flex: 1;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border-strong);
+      background-color: var(--bg-page);
+      color: var(--text-sub);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .theme-opt-btn.active {
+      background-color: var(--accent-soft);
+      color: var(--accent);
+      border-color: var(--accent-border);
+    }
+
+    .file-upload-label {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 10px;
+      border-radius: 10px;
+      border: 2px dashed var(--border-strong);
+      background-color: var(--bg-page);
+      color: var(--text-sub);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .danger-card {
+      padding: 12px 13px;
+      border-radius: 13px;
+      background-color: var(--danger-soft);
+      border: 1px solid var(--danger-border);
+    }
+
+    /* トースト通知 */
+    .toast-wrap {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 90;
+      pointer-events: none;
+      max-width: calc(100vw - 32px);
+    }
+
+    .toast-msg {
+      padding: 9px 15px;
+      border-radius: 11px;
+      background-color: var(--bg-surface-3);
+      color: var(--text-main);
+      border: 1px solid var(--border-strong);
+      font-size: 12px;
+      font-weight: 800;
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+    }
+
+    .toast-msg.error {
+      background-color: #991b1b;
+      color: #ffffff;
+      border-color: #ef4444;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== コンパクトヘッダー ==================== -->
+  <header class="app-header">
+    <div class="container header-inner">
+      <div class="header-top">
+        <div class="brand-wrap">
+          <div class="event-badge">2027.2.20 YOYOGI</div>
+          <h1 class="app-title">AKB48 コール予習帳</h1>
+        </div>
+        <div class="header-actions">
+          <button id="openGuideBtn" type="button" class="btn-icon-pill accent">📖 辞典</button>
+          <button id="openSettingsBtn" type="button" class="btn-icon-pill btn-icon-only" aria-label="設定・データ管理" title="設定・データ管理">⚙️</button>
+        </div>
+      </div>
+
+      <!-- 進捗バー -->
+      <div class="progress-bar-wrap">
+        <span class="progress-text">予習済み <strong id="statDone">0</strong> / 200曲</span>
+        <div class="progress-track">
+          <div id="progressBarDone" class="progress-fill-done" style="width: 0%;"></div>
+          <div id="progressBarPracticing" class="progress-fill-practicing" style="width: 0%;"></div>
+        </div>
+        <span id="statPercent" class="progress-pct">0%</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== 検索＆シンプルフィルター ==================== -->
+  <section class="container controls-section">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input id="searchInput" type="text" class="search-input" placeholder="曲名・番号・グループ名で検索" />
+      <button id="clearSearchBtn" type="button" class="search-clear hidden" aria-label="クリア">×</button>
+    </div>
+
+    <div class="toolbar-row">
+      <div class="view-segment">
+        <button id="viewGroupBtn" type="button" class="view-seg-btn active">グループ別</button>
+        <button id="viewNumberBtn" type="button" class="view-seg-btn">番号順</button>
+      </div>
+      <div id="foldBtnsWrap" class="fold-btns">
+        <button id="expandAllBtn" type="button" class="mini-text-btn">全開</button>
+        <button id="collapseAllBtn" type="button" class="mini-text-btn">全閉</button>
+      </div>
+    </div>
+
+    <!-- 横スクロール1行フィルター -->
+    <div class="filter-scroll" id="mainFilterRow">
+      <button type="button" data-filter="all" class="chip-btn active">すべて</button>
+      <button type="button" data-filter="cat:team" class="chip-btn">チーム・公演</button>
+      <button type="button" data-filter="cat:single" class="chip-btn">シングル</button>
+      <button type="button" data-filter="cat:album" class="chip-btn">アルバム</button>
+      <button type="button" data-filter="cat:unit" class="chip-btn">派生・ソロ</button>
+      <button type="button" data-filter="st:practicing" class="chip-btn">練習中</button>
+      <button type="button" data-filter="st:done" class="chip-btn">予習済み</button>
+      <button type="button" data-filter="call" class="chip-btn">コールあり</button>
+    </div>
+
+    <!-- チーム・公演選択時のみ表示するサブチップ -->
+    <div id="teamSubBox" class="sub-filter-box hidden">
+      <div class="sub-filter-title">チーム・公演で絞り込み</div>
+      <div class="filter-scroll" id="teamSubRow" style="padding-top: 2px;"></div>
+    </div>
+
+    <div class="list-meta-bar">
+      <span id="resultCount">200曲を表示中</span>
+      <span>右端タップで予習ステータス切替</span>
+    </div>
+  </section>
+
+  <!-- ==================== 200曲リスト ==================== -->
+  <main class="container song-list-wrap">
+    <div id="songList" class="song-list"></div>
+
+    <div id="emptyState" class="empty-state hidden">
+      <p><strong style="color: var(--text-main);">条件に一致する曲が見つかりませんでした</strong></p>
+      <p>検索ワードやフィルターを変えてみてください。</p>
+      <button id="resetFiltersBtn" type="button" class="btn-primary" style="margin-top: 8px;">すべて表示する</button>
+    </div>
+  </main>
+
+  <!-- ==================== 曲詳細モーダル ==================== -->
+  <div id="songModal" class="modal-overlay hidden" role="dialog" aria-modal="true">
+    <div class="modal-sheet">
+      <!-- ヘッダー -->
+      <div class="modal-header">
+        <div class="detail-head-left">
+          <div id="modalSongNum" class="detail-num">01</div>
+          <div style="min-width: 0; flex: 1;">
+            <h2 id="modalSongTitle" class="detail-title">曲名</h2>
+            <div class="detail-sub-row">
+              <span id="modalGroupBadge" class="badge badge-group">チームA</span>
+              <div class="status-segment">
+                <button type="button" data-mstatus="todo" class="status-seg-btn">未着手</button>
+                <button type="button" data-mstatus="practicing" class="status-seg-btn">練習中</button>
+                <button type="button" data-mstatus="done" class="status-seg-btn">予習済み</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button id="closeSongModalBtn" type="button" class="modal-close-btn" aria-label="閉じる">×</button>
+      </div>
+
+      <!-- ボディ -->
+      <div class="modal-body">
+        <!-- マルチ音源プレイヤーエリア -->
+        <div class="media-card">
+          <!-- 複数音源があるときのみ表示されるタブ -->
+          <div id="sourceTabs" class="source-tabs hidden"></div>
+
+          <!-- YouTube プレイヤー -->
+          <div id="ytPane" class="hidden">
+            <div id="ytFrameWrap" class="yt-frame-wrap">
+              <div id="ytPlayerMount" class="yt-frame-mount"></div>
+            </div>
+            <div class="yt-bar">
+              <div class="yt-bar-left">
+                <span class="time-pill">⏱ <span id="ytTimeDisplay">0:00</span></span>
+                <span id="ytLabelText"></span>
+              </div>
+              <div class="yt-bar-links">
+                <a id="ytDirectLink" href="#" target="_blank" rel="noopener noreferrer" class="tiny-pill-btn">▶ YouTubeで開く</a>
+                <a id="lyricsLinkYt" href="#" target="_blank" rel="noopener noreferrer" class="tiny-pill-btn">🎵 歌詞</a>
+                <button id="compactBtn" type="button" class="tiny-pill-btn">コンパクト</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Spotify プレイヤー -->
+          <div id="spotifyPane" class="hidden">
+            <iframe id="spotifyIframe" class="embed-frame-spotify" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            <div class="yt-bar">
+              <span style="font-size: 11px; color: var(--text-muted);">Spotify 埋め込み再生</span>
+              <div class="yt-bar-links">
+                <a id="spotifyDirectLink" href="#" target="_blank" rel="noopener noreferrer" class="tiny-pill-btn">Spotifyで開く</a>
+                <a id="lyricsLinkSp" href="#" target="_blank" rel="noopener noreferrer" class="tiny-pill-btn">🎵 歌詞</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Apple Music プレイヤー -->
+          <div id="applePane" class="hidden">
+            <iframe id="appleIframe" class="embed-frame-apple" allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" loading="lazy"></iframe>
+            <div class="yt-bar">
+              <span style="font-size: 11px; color: var(--text-muted);">Apple Music 埋め込み再生</span>
+              <div class="yt-bar-links">
+                <a id="appleDirectLink" href="#" target="_blank" rel="noopener noreferrer" class="tiny-pill-btn">Apple Musicで開く</a>
+                <a id="lyricsLinkAp" href="#" target="_blank" rel="noopener noreferrer" class="tiny-pill-btn">🎵 歌詞</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- 音源未登録ボックス -->
+          <div id="noMediaPane" class="no-media-box hidden">
+            <p>音源未登録（編集から YouTube / Spotify / Apple Music のURLを追加できます）</p>
+            <div class="no-media-actions">
+              <a id="ytSearchBtn" href="#" target="_blank" rel="noopener noreferrer" class="tiny-pill-btn">▶ YouTubeで検索</a>
+              <a id="lyricsLinkEmpty" href="#" target="_blank" rel="noopener noreferrer" class="tiny-pill-btn">🎵 歌詞を検索</a>
+              <button id="jumpEditFromEmptyBtn" type="button" class="tiny-pill-btn" style="color: var(--accent); border-color: var(--accent-border);">✏️ URLを追加</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ペンライト・ひとことメモ（設定されているときのみ表示） -->
+        <div id="memoBadges" class="memo-badges hidden"></div>
+
+        <!-- タブ（🎤 コール / ✏️ 編集・音源設定） -->
+        <div class="detail-tabs">
+          <div class="detail-tab-btns">
+            <button id="tabCallBtn" type="button" class="detail-tab-btn active">🎤 コール</button>
+            <button id="tabEditBtn" type="button" class="detail-tab-btn">✏️ 編集・音源設定</button>
+          </div>
+          <label id="autoFollowWrap" class="auto-follow-label">
+            <input id="autoFollowCheck" type="checkbox" checked />
+            <span>自動追従</span>
+          </label>
+        </div>
+
+        <!-- 🎤 コール閲覧ペイン -->
+        <div id="callViewPane">
+          <div id="callLinesContainer" class="call-lines"></div>
+          <div id="callEmptyState" class="empty-state hidden" style="padding: 22px 12px;">
+            <p><strong style="color: var(--text-main);">まだコールが登録されていません</strong></p>
+            <p>「編集・音源設定」から定番MIXやタイムスタンプを追加できます。</p>
+            <button id="jumpToEditBtn" type="button" class="btn-primary" style="margin-top: 8px;">✏️ コールを記入する</button>
+          </div>
+        </div>
+
+        <!-- ✏️ 編集・音源設定ペイン -->
+        <div id="callEditPane" class="hidden">
+          <!-- コール編集 -->
+          <div class="edit-group">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; gap: 6px; flex-wrap: wrap;">
+              <h3 class="edit-group-title" style="margin: 0;">コール・秒数テキスト</h3>
+              <button id="insertTimeBtn" type="button" class="btn-primary" style="padding: 5px 10px; font-size: 11px;">⏱ 今の秒数を挿入</button>
+            </div>
+            <div class="insert-bar">
+              <button type="button" data-tpl="standard" class="tpl-btn accent">+ スタンダードMIX</button>
+              <button type="button" data-tpl="japanese" class="tpl-btn accent">+ 日本語MIX</button>
+              <button type="button" data-tpl="ainu" class="tpl-btn accent">+ アイヌ語MIX</button>
+              <button type="button" data-tpl="gachikoi" class="tpl-btn accent">+ ガチ恋口上</button>
+            </div>
+            <textarea id="editCallTextarea" class="editor-textarea" placeholder="# イントロ&#10;[0:15] ! あー　よっしゃいくぞー&#10;[0:17] ! タイガー　ファイアー　サイバー　ファイバー　ダイバー　バイバー　ジャージャー"></textarea>
+            <p class="editor-hint">
+              <strong>[0:15] ! コール</strong> でYouTube再生に同期＆「あと◯秒」表示。<strong>! </strong>＝ピンク枠、<strong># </strong>＝見出し、通常行＝メモ。
+            </p>
+          </div>
+
+          <!-- ペンライト・ひとことメモ -->
+          <div class="edit-group">
+            <h3 class="edit-group-title">ペンライト色・メモ</h3>
+            <div class="field-block">
+              <label for="editPenlightInput" class="field-label">🔦 ペンライト色</label>
+              <input id="editPenlightInput" type="text" class="text-input" placeholder="例：ピンク×白 / 推しカラー" />
+            </div>
+            <div class="field-block">
+              <label for="editNoteInput" class="field-label">💡 ひとことメモ</label>
+              <input id="editNoteInput" type="text" class="text-input" placeholder="例：冒頭円陣あり / クラップ重視" />
+            </div>
+          </div>
+
+          <!-- 音源URL設定 -->
+          <div class="edit-group">
+            <h3 class="edit-group-title">音源URL設定（YouTube / Spotify / Apple Music）</h3>
+            <div class="field-block">
+              <label for="editYtUrlInput" class="field-label">▶ YouTube / YouTube Music URL（または動画ID）</label>
+              <input id="editYtUrlInput" type="url" class="text-input" placeholder="https://www.youtube.com/watch?v=... / https://music.youtube.com/watch?v=..." />
+            </div>
+            <div class="field-block">
+              <label for="editSpotifyUrlInput" class="field-label">🟢 Spotify 曲URL</label>
+              <input id="editSpotifyUrlInput" type="url" class="text-input" placeholder="https://open.spotify.com/track/..." />
+            </div>
+            <div class="field-block">
+              <label for="editAppleUrlInput" class="field-label">🍎 Apple Music 曲URL</label>
+              <input id="editAppleUrlInput" type="url" class="text-input" placeholder="https://music.apple.com/jp/album/..." />
+            </div>
+          </div>
+
+          <!-- 曲名編集（69thシングル解禁時用） -->
+          <div class="edit-group">
+            <h3 class="edit-group-title">曲名編集（未発表曲の更新など）</h3>
+            <input id="editTitleInput" type="text" class="text-input" />
+          </div>
+
+          <div class="edit-actions-row">
+            <button id="revertSongBtn" type="button" class="btn-secondary" style="font-size: 11px; color: var(--text-muted);">この曲を初期値に戻す</button>
+            <button id="saveEditBtn" type="button" class="btn-primary">💾 保存してコールを見る</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- フッター -->
+      <div class="modal-footer">
+        <button id="prevSongBtn" type="button" class="btn-secondary">← 前の曲</button>
+        <span id="modalNavPos" style="font-size: 12px; font-weight: 800; color: var(--text-muted);">1 / 200</span>
+        <button id="nextSongBtn" type="button" class="btn-secondary">次の曲 →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== コール辞典モーダル ==================== -->
+  <div id="guideModal" class="modal-overlay hidden" role="dialog" aria-modal="true">
+    <div class="modal-sheet">
+      <div class="modal-header">
+        <div>
+          <h2 style="margin: 0; font-size: 16px; font-weight: 900;">📖 コール辞典</h2>
+          <p style="margin: 2px 0 0; font-size: 11px; color: var(--text-muted);">定番MIX・ガチ恋口上（読み方付き）</p>
+        </div>
+        <button id="closeGuideModalBtn" type="button" class="modal-close-btn" aria-label="閉じる">×</button>
+      </div>
+      <div id="guideContent" class="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- ==================== 設定・データ管理モーダル（⚙️） ==================== -->
+  <div id="settingsModal" class="modal-overlay hidden" role="dialog" aria-modal="true">
+    <div class="modal-sheet">
+      <div class="modal-header">
+        <div>
+          <h2 style="margin: 0; font-size: 16px; font-weight: 900;">⚙️ 設定・データ管理</h2>
+          <p style="margin: 2px 0 0; font-size: 11px; color: var(--text-muted);">予習ステータスと手動編集分のみ端末に保存されます</p>
+        </div>
+        <button id="closeSettingsModalBtn" type="button" class="modal-close-btn" aria-label="閉じる">×</button>
+      </div>
+      <div class="modal-body">
+        <!-- テーマ切替 -->
+        <div class="info-card">
+          <h3 class="info-card-title" style="color: var(--text-main); margin-bottom: 8px;">外観テーマ</h3>
+          <div class="theme-switch-row">
+            <button id="themeDarkBtn" type="button" class="theme-opt-btn">🌙 ダーク（標準）</button>
+            <button id="themeLightBtn" type="button" class="theme-opt-btn">☀️ ライト</button>
+          </div>
+        </div>
+
+        <!-- JSONバックアップ書き出し -->
+        <div class="info-card">
+          <h3 class="info-card-title" style="color: var(--text-main);">バックアップ書き出し（JSON）</h3>
+          <p class="info-card-desc">予習進捗や自分で編集したコール・音源URLを保存します。</p>
+          <div style="display: flex; gap: 8px;">
+            <button id="exportJsonBtn" type="button" class="btn-primary" style="flex: 1;">⬇️ ファイル保存</button>
+            <button id="copyJsonBtn" type="button" class="btn-secondary">📋 コピー</button>
+          </div>
+        </div>
+
+        <!-- JSON読み込み -->
+        <div class="info-card">
+          <h3 class="info-card-title" style="color: var(--text-main);">バックアップ読み込み</h3>
+          <p class="info-card-desc">保存したJSONファイルを選択するか、テキストを貼り付けて復元します。</p>
+          <label class="file-upload-label">
+            📂 JSONファイルを選択
+            <input id="importJsonFile" type="file" accept=".json,application/json" class="hidden" />
+          </label>
+          <textarea id="importJsonText" rows="3" class="editor-textarea" style="min-height: 70px; margin-top: 8px; font-size: 11px;" placeholder="JSONテキストを貼り付け..."></textarea>
+          <button id="importJsonTextBtn" type="button" class="btn-secondary" style="width: 100%; margin-top: 6px;">テキストから読み込む</button>
+        </div>
+
+        <!-- 初期化 -->
+        <div class="danger-card">
+          <h3 class="info-card-title" style="color: var(--danger);">データの初期化</h3>
+          <p class="info-card-desc" style="color: var(--text-sub);">端末に保存された予習ステータス・編集データをすべて消去します。</p>
+          <button id="resetStep1Btn" type="button" class="btn-secondary" style="color: var(--danger); border-color: var(--danger-border);">初期化する...</button>
+          <div id="resetConfirmBox" class="hidden" style="margin-top: 8px; padding: 10px; border-radius: 10px; background: var(--bg-surface); border: 1px solid var(--danger-border);">
+            <p style="margin: 0 0 8px; font-size: 12px; font-weight: 800; color: var(--danger);">本当にすべて初期化しますか？</p>
+            <div style="display: flex; gap: 8px;">
+              <button id="resetConfirmExecBtn" type="button" class="btn-primary" style="background-color: #dc2626;">はい、初期化する</button>
+              <button id="resetConfirmCancelBtn" type="button" class="btn-secondary">キャンセル</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- トースト通知 -->
+  <div id="toastContainer" class="toast-wrap"></div>
+
+  <!-- YouTube IFrame API -->
+  <script async src="https://www.youtube.com/iframe_api"></script>
+
+  <script>
+    (function () {
+      'use strict';
+
+      // ============================================================
+      // 1. ストレージキー・定数定義
+      //    ※差分保存キー（本体更新時も予習ステータス保持＆未編集曲は自動最新化）
+      // ============================================================
+      const DIFF_STORAGE_KEY = 'akb48_yoyogi2027_user_diff_v1';
+      const THEME_STORAGE_KEY = 'akb48_yoyogi2027_theme_v2';
+
+      const STATUS_META = {
+        todo:       { label: '未着手',   icon: '○', cls: 'st-todo' },
+        practicing: { label: '練習中',   icon: '△', cls: 'st-practicing' },
+        done:       { label: '予習済み', icon: '✓', cls: 'st-done' }
+      };
+
+      const CAT_META = {
+        team:   { label: 'チーム・公演', cls: 'cat-team' },
+        single: { label: 'シングル',     cls: 'cat-single' },
+        album:  { label: 'アルバム',     cls: 'cat-album' },
+        unit:   { label: '派生・ソロ',   cls: 'cat-unit' }
+      };
+
+      const TEAM_ORDER = [
+        'チームA', 'チームK', 'チームB', 'チーム4', 'チーム8',
+        'ひまわり組', '「ここからだ」公演', 'チームサプライズ', 'SKE48 公演曲'
+      ];
+
+      const GROUP_ORDER = [
+        // チーム・公演
+        'team::チームA', 'team::チームK', 'team::チームB', 'team::チーム4', 'team::チーム8',
+        'team::ひまわり組', 'team::「ここからだ」公演', 'team::チームサプライズ', 'team::SKE48 公演曲',
+        // シングル
+        'single::桜の花びらたち', 'single::スカート、ひらり', 'single::軽蔑していた愛情', 'single::僕の太陽',
+        'single::夕陽を見ているか?', 'single::Baby! Baby! Baby!', 'single::大声ダイヤモンド', 'single::10年桜',
+        'single::涙サプライズ!', 'single::言い訳 Maybe', 'single::RIVER', 'single::桜の栞',
+        'single::ポニーテールとシュシュ', 'single::ヘビーローテーション', 'single::Beginner', 'single::チャンスの順番',
+        'single::桜の木になろう', 'single::Everyday、カチューシャ', 'single::フライングゲット', 'single::風は吹いている',
+        'single::GIVE ME FIVE!', 'single::真夏の Sounds good !', 'single::ギンガムチェック', 'single::UZA',
+        'single::永遠プレッシャー', 'single::So long !', 'single::さよならクロール', 'single::恋するフォーチュンクッキー',
+        'single::鈴懸なんちゃら', 'single::前しか向かねえ', 'single::希望的リフレイン', 'single::僕たちは戦わない',
+        'single::ハロウィン・ナイト', 'single::唇に Be My Baby', 'single::君はメロディー',
+        'single::LOVE TRIP / しあわせを分けなさい', 'single::ハイテンション', 'single::#好きなんだ',
+        'single::11月のアンクレット', 'single::ジャーバージャ', 'single::Teacher Teacher',
+        'single::センチメンタルトレイン', 'single::NO WAY MAN', 'single::ジワる DAYS', 'single::サステナブル',
+        'single::根も葉も Rumor', 'single::久しぶりのリップグロス', 'single::どうしても君が好きだ',
+        'single::アイドルなんかじゃなかったら', 'single::カラコンウインク', 'single::恋 詰んじゃった',
+        'single::まさかの Confession', 'single::Oh my pumpkin!', 'single::名残り桜', 'single::好き ish',
+        'single::69th シングル',
+        // アルバム
+        'album::神曲たち', 'album::SET LIST〜グレイテストソングス〜完全盤', 'album::ここにいたこと',
+        'album::1830m', 'album::次の足跡', 'album::ここがロドスだ、ここで跳べ!',
+        'album::サムネイル', 'album::僕たちは、あの日の夜明けを知っている',
+        // 派生・ソロ
+        'unit::大堀めしべ', 'unit::ノースリーブス', 'unit::フレンチ・キス',
+        'unit::Not yet', 'unit::指原莉乃', 'unit::NO NAME', 'unit::ニャーKB with ツチノコパンダ'
+      ];
+
+      // ============================================================
+      // 2. コール辞典（ふりがな付き）＆ワンタップ挿入（漢字のみ）
+      // ============================================================
+      const CALL_TEMPLATES = {
+        standard: {
+          title: 'スタンダードMIX',
+          desc: '主に「あー　よっしゃいくぞー」で発動する一番基本のMIX。',
+          guideText: '発動：あー　よっしゃいくぞー\nタイガー　ファイアー　サイバー　ファイバー　ダイバー　バイバー　ジャージャー',
+          insertText: '! あー　よっしゃいくぞー\n! タイガー　ファイアー　サイバー　ファイバー　ダイバー　バイバー　ジャージャー'
+        },
+        japanese: {
+          title: '日本語MIX',
+          desc: '主に「あー　もういっちょいくぞー」で発動。2番イントロで入れる定番MIX。',
+          guideText: '発動：あー　もういっちょいくぞー\n虎（とら）　火（ひ）　人造（じんぞう）　繊維（せんい）　海女（あま）　振動（しんどう）　化繊飛除去（かせん　とび　じょーきょー）',
+          insertText: '! あー　もういっちょいくぞー\n! 虎　火　人造　繊維　海女　振動　化繊飛除去'
+        },
+        ainu: {
+          title: 'アイヌ語MIX',
+          desc: '間奏や落ちサビ前など、3回目のMIXポイントで入れるMIX。',
+          guideText: 'チャペ　アペ　カラ　キナ　ララ　トゥスケ　ミョーホントゥスケ（ミョー　ホン　トゥスケ）',
+          insertText: '! チャペ　アペ　カラ　キナ　ララ　トゥスケ　ミョーホントゥスケ'
+        },
+        gachikoi: {
+          title: 'ガチ恋口上',
+          desc: '『47の素敵な街へ』『LOVE修行』などの長い間奏で入れる定番口上。○○に推しの名前を入れます。',
+          guideText: '言いたいことがあるんだよ\nやっぱり○○はかわいいよ\n好き好き大好きやっぱ好き\nやっと見つけたお姫様\n俺が生まれてきた理由\nそれは○○に出会うため\n俺と一緒に人生歩もう\n世界で一番愛してる\nア・イ・シ・テ・ル',
+          insertText: '! 言いたいことがあるんだよ\n! やっぱり○○はかわいいよ\n! 好き好き大好きやっぱ好き\n! やっと見つけたお姫様\n! 俺が生まれてきた理由\n! それは○○に出会うため\n! 俺と一緒に人生歩もう\n! 世界で一番愛してる\n! ア・イ・シ・テ・ル'
+        }
+      };
+
+      // ============================================================
+      // 3. 全200曲マスターデータ
+      //    [番号, 曲名, カテゴリ, グループ名, YouTube ID, 動画ラベル]
+      // ============================================================
+      const RAW_SONGS = [
+        [1, "Dear my teacher", "team", "チームA", "1R_YdslVtOc", "公式音源（SKE48 Team S版）"],
+        [2, "スカート、ひらり", "single", "スカート、ひらり", "", ""],
+        [3, "桜の花びらたち", "single", "桜の花びらたち", "b1bcsbXJaTA", "公式音源（2025 ver.）"],
+        [4, "ガラスの I LOVE YOU", "team", "チームA", "EnmZb0CUpkU", "公式音源（NMB48版）"],
+        [5, "背中から抱きしめて", "team", "チームA", "af8T7YOlzfU", "公式音源（NMB48版）"],
+        [6, "Blue rose", "team", "チームK", "-EnGhOiPy-U", "公式音源（NMB48版）"],
+        [7, "禁じられた2人", "team", "チームK", "MMR-GWRvOv4", "公式音源（NMB48版）"],
+        [8, "転がる石になれ", "team", "チームK", "BamuhAYNlik", "公式音源（NMB48版）"],
+        [9, "Bird", "team", "チームA", "ioiovRhldaA", "公式音源（NMB48版）"],
+        [10, "草原の奇跡", "team", "チームK", "", ""],
+        [11, "Only today", "team", "チームA", "W5jnXPKVR_E", "公式音源（AKB48）"],
+        [12, "7時12分の初恋", "team", "チームA", "UeYep6s-2wc", "公式音源（NMB48版）"],
+        [13, "純愛のクレッシェンド", "team", "チームA", "BpsNNNWr8bs", "公式音源（NMB48版）"],
+        [14, "君が教えてくれた", "team", "チームA", "XngNhuRPycA", "公式音源（NMB48版）"],
+        [15, "軽蔑していた愛情", "single", "軽蔑していた愛情", "FVt-l2_ifqs", "公式音源（NMB48版）"],
+        [16, "アイドルなんて呼ばないで", "team", "ひまわり組", "w6TXA0ZLtmI", "公式音源（Team 4）"],
+        [17, "向日葵", "team", "ひまわり組", "jnLS7QOlq3g", "公式音源（Team 4）"],
+        [18, "夕陽を見ているか?", "single", "夕陽を見ているか?", "I5S1f6ooTn0", "公式音源（Team 4）"],
+        [19, "僕の太陽", "single", "僕の太陽", "uDUrrd5rx5A", "公式音源（Team 4）"],
+        [20, "愛とプライド", "team", "ひまわり組", "FrVFIpxSqrY", "公式音源（ひまわり組）"],
+        [21, "ロックだよ、人生は…", "team", "ひまわり組", "w7f7HNuTqaQ", "公式音源（ひまわり組）"],
+        [22, "初日", "team", "チームB", "S48-uIg3e6E", "公式音源"],
+        [23, "2人乗りの自転車", "team", "チームB", "FlLTHCgh6dk", "公式音源（Team B）"],
+        [24, "天使のしっぽ", "team", "チームB", "BP-Yd9X98ss", "公式音源（Team B）"],
+        [25, "てもでもの涙", "team", "チームB", "4_poJYJBAk0", "公式音源（Team B）"],
+        [26, "最終ベルが鳴る", "team", "チームK", "d7M41mXC0b8", "公式音源（Team K）"],
+        [27, "ごめんね ジュエル", "team", "チームK", "cnSKcjb7aZg", "公式音源（Team K）"],
+        [28, "回遊魚のキャパシティ", "team", "チームK", "TRj7Km2sBRs", "公式音源（Team K）"],
+        [29, "Baby! Baby! Baby!", "single", "Baby! Baby! Baby!", "BXeQtIrhVcs", "公式MV"],
+        [30, "甘い股関節", "unit", "大堀めしべ", "", ""],
+        [31, "スコールの間に", "team", "チームA", "6vQbluAxxFg", "公式音源（Team A）"],
+        [32, "君に会うたび 恋をする", "team", "チームA", "Lo8jteu7OKw", "公式音源（Team A）"],
+        [33, "ハート型ウイルス", "team", "チームA", "W4f4-jnUwYo", "公式音源（Team A）"],
+        [34, "ツンデレ!", "team", "チームA", "QC3VrYRxXU4", "公式音源（Team A）"],
+        [35, "ひこうき雲", "team", "チームA", "yBGwymXuhQ0", "公式MV（シアターガールズver）"],
+        [36, "AKB参上!", "team", "チームA", "06DSIB9H8qk", "公式音源（Team A）"],
+        [37, "大声ダイヤモンド", "single", "大声ダイヤモンド", "F32epua9VQs", "公式MV"],
+        [38, "Relax!", "unit", "ノースリーブス", "ktbcWgHy6HQ", "公式音源（ノースリーブス）"],
+        [39, "残念少女", "team", "チームB", "uf3xU8ZYqiY", "公式音源（Team B）"],
+        [40, "女子高生はやめられない", "team", "チームB", "QmLJpXzp7t0", "公式音源（Team B）"],
+        [41, "そばかすのキス", "team", "チームB", "6DEtSUAFSfs", "公式音源（Team B）"],
+        [42, "手をつなぎながら", "team", "SKE48 公演曲", "mfVrEq_qyqI", "公式音源（SKE48）"],
+        [43, "チャイムは LOVE SONG", "team", "SKE48 公演曲", "x5OQwRGpvBs", "公式音源（SKE48）"],
+        [44, "10年桜", "single", "10年桜", "iyn5uirg2j8", "公式MV"],
+        [45, "エンドロール", "team", "チームK", "4C_qQOC30mg", "公式音源（Team K）"],
+        [46, "涙サプライズ!", "single", "涙サプライズ!", "pKQlKygAMrg", "公式MV"],
+        [47, "FIRST LOVE", "single", "涙サプライズ!", "gK-uA8rhzpw", "公式音源（小野恵令奈）"],
+        [48, "言い訳 Maybe", "single", "言い訳 Maybe", "qJ-Drv9tVjI", "公式MV"],
+        [49, "飛べないアゲハチョウ", "single", "言い訳 Maybe", "bUCoMByWzI0", "公式MV"],
+        [50, "RIVER", "single", "RIVER", "bQqLKCg-UgA", "公式MV"],
+        [51, "君のことが好きだから", "single", "RIVER", "PjgyH3lVI18", "公式MV"],
+        [52, "マジスカロックンロール", "single", "桜の栞", "Kc9cuqAjjhs", "公式MV"],
+        [53, "遠距離ポスター", "single", "桜の栞", "AFkT9fFTWvc", "公式MV"],
+        [54, "彼女になれますか?", "team", "チームK", "sg4X1yAUKqA", "公式音源（Team K）"],
+        [55, "引っ越しました", "team", "チームK", "AStmngY9HMM", "公式音源（Team K）"],
+        [56, "自分らしさ", "album", "神曲たち", "JOJBLeDO8cY", "公式音源"],
+        [57, "君と虹と太陽と", "album", "神曲たち", "ts5z7XSEZK4", "公式音源"],
+        [58, "隕石の確率", "team", "チームB", "-shsWRygAkc", "公式音源（Team B）"],
+        [59, "嵐の夜には", "team", "チームB", "CjUWNR_DtMw", "公式音源（Team B）"],
+        [60, "夜風の仕業", "team", "チームB", "9FTx41Kf5wE", "公式音源（Team B）"],
+        [61, "好き 好き 好き", "team", "チームB", "gRqL8_6nd74", "公式音源（Team B）"],
+        [62, "オネストマン", "team", "チームB", "mLAjUem8qIw", "公式音源（Team B）"],
+        [63, "チームB推し", "team", "チームB", "F1tXiUOIVZk", "公式MV"],
+        [64, "ポニーテールとシュシュ", "single", "ポニーテールとシュシュ", "SwXtaahxjls", "公式MV"],
+        [65, "マジジョテッペンブルース", "single", "ポニーテールとシュシュ", "_fcAEkH09_M", "公式MV"],
+        [66, "Seventeen", "album", "SET LIST〜グレイテストソングス〜完全盤", "", ""],
+        [67, "憧れのポップスター", "team", "チームA", "2SLZC_5Hdso", "公式音源（Team A）"],
+        [68, "美しき者", "team", "チームA", "ZAdk3-e_rUY", "公式音源（Team A）"],
+        [69, "摩天楼の距離", "team", "チームA", "S6eMIMLyVxY", "公式音源（Team A）"],
+        [70, "Pioneer", "team", "チームA", "2HY7FR2xzqo", "公式音源（Team A）"],
+        [71, "ヘビーローテーション", "single", "ヘビーローテーション", "lkHlnWFnA0c", "公式MV"],
+        [72, "野菜シスターズ", "single", "ヘビーローテーション", "pizw3Wf8MHM", "公式MV"],
+        [73, "涙のシーソーゲーム", "single", "ヘビーローテーション", "U1_7sqZa0wk", "公式MV"],
+        [74, "Beginner", "single", "Beginner", "HDn_EK7VRwQ", "公式MV"],
+        [75, "僕だけの value", "single", "Beginner", "B7XbSbTgla0", "公式MV"],
+        [76, "君について", "single", "Beginner", "hOpuFBfc_UA", "公式MV"],
+        [77, "チャンスの順番", "single", "チャンスの順番", "s_2Uz2Z9IkA", "公式MV"],
+        [78, "If", "unit", "フレンチ・キス", "wDdiZBflLF0", "公式MV（Short ver.）"],
+        [79, "桜の木になろう", "single", "桜の木になろう", "n9hNT5ezcnc", "公式MV"],
+        [80, "黄金センター", "single", "桜の木になろう", "ZirGt_QJbgk", "公式音源（team研究生）"],
+        [81, "Everyday、カチューシャ", "single", "Everyday、カチューシャ", "vEVq_Bx7_KY", "公式MV"],
+        [82, "これから Wonderland", "single", "Everyday、カチューシャ", "7NBhx5_X-_s", "公式MV"],
+        [83, "少女たちよ", "album", "ここにいたこと", "T-rRuD25nck", "公式音源"],
+        [84, "波乗りかき氷", "unit", "Not yet", "R6Kt4BJQR7I", "公式MV（Short ver.）"],
+        [85, "フライングゲット", "single", "フライングゲット", "WdhMjzfg6-k", "公式MV（ダンシングver.）"],
+        [86, "風は吹いている", "single", "風は吹いている", "fgESmgZ4ld8", "公式MV（DANCE ver.）"],
+        [87, "君の背中", "single", "風は吹いている", "0fchfgjuR0o", "公式MV"],
+        [88, "ペラペラペラオ", "unit", "Not yet", "w9QXiMTGjzw", "公式MV（Short ver.）"],
+        [89, "ゼロサム太陽", "team", "チームK", "mUtLo_Oij3Y", "公式MV"],
+        [90, "呼び捨てファンタジー", "team", "チームB", "ff1cIOTPbrg", "公式MV"],
+        [91, "走れ!ペンギン", "team", "チーム4", "VVfHGgpWt1A", "公式音源（Team 4）"],
+        [92, "ペディキュア day", "unit", "ノースリーブス", "", ""],
+        [93, "GIVE ME FIVE!", "single", "GIVE ME FIVE!", "SuhiIItERLo", "公式MV"],
+        [94, "それでも好きだよ", "unit", "指原莉乃", "XOevfPVGOFM", "公式MV（Short ver.）"],
+        [95, "真夏の Sounds good !", "single", "真夏の Sounds good !", "MBuJ5R2KBKo", "公式MV（Dance ver.）"],
+        [96, "ファースト・ラビット", "album", "1830m", "61-pdq8rItE", "公式MV"],
+        [97, "恋愛総選挙", "album", "1830m", "aLyhdcEk10M", "公式音源"],
+        [98, "スキャンダラスに行こう!", "album", "1830m", "uW-vtNTULQs", "公式音源"],
+        [99, "ノーカン", "team", "チームB", "rEGS3wIc8UM", "公式音源（Team B）"],
+        [100, "アボガドじゃね～し…", "album", "1830m", "yF5JLQyMi54", "公式音源"],
+        [101, "やさしさの地図", "album", "1830m", "FUTm2CEutWw", "公式音源"],
+        [102, "ギンガムチェック", "single", "ギンガムチェック", "XHdcW2axwMk", "公式MV"],
+        [103, "重力シンパシー", "team", "チームサプライズ", "9lBZEJdUbb4", "公式フル音源"],
+        [104, "君の c/w", "team", "チームサプライズ", "kiqGPxe8fk4", "公式音源（チームサプライズ）"],
+        [105, "1994年の雷鳴", "team", "チームサプライズ", "dc14JnxnzfQ", "公式音源（チームサプライズ）"],
+        [106, "次の Season", "single", "UZA", "aE6XeaYJ328", "公式MV"],
+        [107, "スクラップ&ビルド", "team", "チームK", "AQOShM04qpw", "公式MV"],
+        [108, "AKBフェスティバル", "team", "チームサプライズ", "JELg3Ljmv0g", "公式MV"],
+        [109, "永遠プレッシャー", "single", "永遠プレッシャー", "E_NkDk49S9I", "公式MV"],
+        [110, "永遠より続くように", "single", "永遠プレッシャー", "tvtUbgnWZKk", "公式MV"],
+        [111, "私たちの Reason", "single", "永遠プレッシャー", "5wOs6PWcMH8", "公式音源"],
+        [112, "Waiting room", "single", "So long !", "81mkS41nDEg", "公式MV"],
+        [113, "この涙を君に捧ぐ", "unit", "NO NAME", "h0b3PH8M1Ww", "公式MV"],
+        [114, "さよならクロール", "single", "さよならクロール", "6qN_1gd9z_M", "公式フル音源"],
+        [115, "LOVE修行", "single", "さよならクロール", "BgDXf08MgBU", "公式MV"],
+        [116, "キミが思ってるより…", "team", "チームサプライズ", "t5lvffzjq1g", "公式音源（SKE48 Team E版）"],
+        [117, "恋するフォーチュンクッキー", "single", "恋するフォーチュンクッキー", "dFf4AgBNR1E", "公式MV"],
+        [118, "細雪リグレット", "team", "チームK", "tcLA6JvhbH4", "公式MV"],
+        [119, "清純フィロソフィー", "team", "チーム4", "4kZNKTDenI0", "公式MV"],
+        [120, "選んでレインボー", "single", "鈴懸なんちゃら", "E_Sg0a3Pjv0", "公式音源（てんとうむChu!）"],
+        [121, "After rain", "album", "次の足跡", "uK-6ml-NYo0", "公式音源"],
+        [122, "シャワーの後だから", "album", "次の足跡", "625kn3hF6bM", "公式音源"],
+        [123, "前しか向かねえ", "single", "前しか向かねえ", "n24zp_wPC7E", "公式MV"],
+        [124, "昨日よりもっと好き", "single", "前しか向かねえ", "i1i8TGk6jSc", "公式MV"],
+        [125, "47の素敵な街へ", "team", "チーム8", "EwGqQAebzx0", "公式フル音源"],
+        [126, "バラの儀式", "team", "チームサプライズ", "7MoyIlai-Uo", "公式MV"],
+        [127, "希望的リフレイン", "single", "希望的リフレイン", "eWnLRboP6LI", "公式MV"],
+        [128, "従順な Slave", "team", "チームA", "DcGTly8RDBs", "公式音源（Team A）"],
+        [129, "制服の羽根", "team", "チーム8", "jbQUE3MPn40", "公式MV"],
+        [130, "ここがロドスだ、ここで跳べ!", "album", "ここがロドスだ、ここで跳べ!", "Kzn8aOb7XB8", "公式音源"],
+        [131, "愛の存在", "album", "ここがロドスだ、ここで跳べ!", "rc6ikFliQkc", "公式音源"],
+        [132, "アイドルはウーニャニャの件", "unit", "ニャーKB with ツチノコパンダ", "LwIm_TSvhyQ", "公式MV（Short ver.）"],
+        [133, "僕たちは戦わない", "single", "僕たちは戦わない", "-EAALRZ6C4A", "公式MV（Short ver.）"],
+        [134, "水の中の伝導率", "single", "ハロウィン・ナイト", "QBbYQPakcAY", "公式MV"],
+        [135, "唇に Be My Baby", "single", "唇に Be My Baby", "hfnCAjE8LsU", "公式MV"],
+        [136, "365日の紙飛行機", "single", "唇に Be My Baby", "JUbU6VLV6yI", "公式MV"],
+        [137, "なんか、ちょっと、急に…", "team", "チーム4", "5Lh_PSsg-u4", "公式音源（Team 4）"],
+        [138, "ラベンダーフィールド", "team", "チームA", "", ""],
+        [139, "夢で Kiss me !", "team", "チームA", "", ""],
+        [140, "君はメロディー", "single", "君はメロディー", "Q2E7TLotcko", "公式MV"],
+        [141, "夢へのルート", "team", "チーム8", "KK1v0ttWTNk", "公式MV"],
+        [142, "LOVE TRIP", "single", "LOVE TRIP / しあわせを分けなさい", "RpggNE6agKo", "公式MV"],
+        [143, "伝説の魚", "single", "LOVE TRIP / しあわせを分けなさい", "rqgVSd0u00o", "公式MV"],
+        [144, "抑えきれない衝動", "single", "ハイテンション", "L1AzAWYeqKo", "公式MV"],
+        [145, "また あなたのことを考えてた", "single", "ハイテンション", "UgkiWPx7NBM", "公式音源（チームボーカル）"],
+        [146, "すべては途中経過", "album", "サムネイル", "sKl2oFh3kIc", "公式音源"],
+        [147, "#好きなんだ", "single", "#好きなんだ", "zK_e8mCa5H0", "公式MV"],
+        [148, "だらしない愛し方", "single", "#好きなんだ", "AblnQpBNaM8", "公式MV"],
+        [149, "抱きつこうか?", "single", "#好きなんだ", "GO5Fh_Mv2SI", "公式音源（16期研究生）"],
+        [150, "野蛮な求愛", "single", "11月のアンクレット", "7jDkg2Jym9k", "公式MV"],
+        [151, "法定速度と優越感", "single", "11月のアンクレット", "oug2YiipfBo", "公式MV"],
+        [152, "涙の表面張力", "album", "僕たちは、あの日の夜明けを知っている", "Ct1JC3R62pY", "公式音源"],
+        [153, "ごめんね、好きになっちゃって…", "album", "僕たちは、あの日の夜明けを知っている", "8qn977fiGZY", "公式音源"],
+        [154, "国境のない時代", "single", "ジャーバージャ", "pO5dNXuxqhg", "公式MV"],
+        [155, "Teacher Teacher", "single", "Teacher Teacher", "7DwAwNNHaW8", "公式MV"],
+        [156, "猫アレルギー", "team", "チーム4", "O6eQCFkQ0X4", "公式MV"],
+        [157, "蜂の巣ダンス", "team", "チーム8", "EWPN2ag7Mfg", "公式音源（Team 8）"],
+        [158, "センチメンタルトレイン", "single", "センチメンタルトレイン", "YAMF5Rypnrs", "公式MV（完全版）"],
+        [159, "サンダルじゃできない恋", "single", "センチメンタルトレイン", "WKEj5Hp97Js", "公式MV"],
+        [160, "おはようから始まる世界", "single", "NO WAY MAN", "xEW3Oo81OyE", "公式MV"],
+        [161, "最強ツインテール", "single", "NO WAY MAN", "XOC3T4czt_0", "公式MV"],
+        [162, "ジワる DAYS", "single", "ジワる DAYS", "ZvNViwHjSa8", "公式MV"],
+        [163, "初恋ドア", "single", "ジワる DAYS", "FW2r76NPcPY", "公式MV"],
+        [164, "サステナブル", "single", "サステナブル", "0pKfxbCHLoU", "公式MV"],
+        [165, "好きだ 好きだ 好きだ", "team", "チーム8", "l9zI-VLtbpE", "公式MV"],
+        [166, "モニカ、夜明けだ", "single", "サステナブル", "nSCSwTuZ7Xs", "公式MV"],
+        [167, "ジタバタ", "team", "チーム8", "CcWf-gTJOa0", "公式MV"],
+        [168, "根も葉も Rumor", "single", "根も葉も Rumor", "e9N_Au80T8w", "公式MV"],
+        [169, "大騒ぎ天国", "single", "根も葉も Rumor", "Mzm8dgHm-9w", "公式音源"],
+        [170, "久しぶりのリップグロス", "single", "久しぶりのリップグロス", "tXV1zqQoh90", "公式MV"],
+        [171, "Wonderful Love", "single", "久しぶりのリップグロス", "t0kr36LS_94", "公式音源"],
+        [172, "どうしても君が好きだ", "single", "どうしても君が好きだ", "l7mFdh37SLc", "公式MV"],
+        [173, "あの夏の防波堤", "single", "どうしても君が好きだ", "_utk9Xn0WGY", "公式音源"],
+        [174, "アイドルなんかじゃなかったら", "single", "アイドルなんかじゃなかったら", "tBFJFAP3GKU", "公式MV"],
+        [175, "全力反抗期", "single", "アイドルなんかじゃなかったら", "Hnn5TIoL4v0", "公式音源"],
+        [176, "カラコンウインク", "single", "カラコンウインク", "TUvcf6wd0ok", "公式MV"],
+        [177, "星が消えないうちに", "single", "カラコンウインク", "O9w2ejUbcS4", "公式MV"],
+        [178, "マチビト", "single", "カラコンウインク", "miQ4HmUYtwU", "公式音源"],
+        [179, "恋 詰んじゃった", "single", "恋 詰んじゃった", "bWklb0mZYMw", "公式MV"],
+        [180, "君と僕のポールスター", "single", "恋 詰んじゃった", "Uzt8h-2EEX8", "公式音源"],
+        [181, "ここからだ", "team", "「ここからだ」公演", "pX01ULfij_U", "公式音源"],
+        [182, "劇場へ ようこそ！", "team", "「ここからだ」公演", "ehiULfdb24o", "公式ライブ映像"],
+        [183, "奇跡が消えても", "team", "「ここからだ」公演", "j9OEPJ_ds4A", "公式音源"],
+        [184, "緞帳を上げてくれ！", "team", "「ここからだ」公演", "ZSDwsgY0i5g", "公式ライブ映像"],
+        [185, "まさかの Confession", "single", "まさかの Confession", "uhPLp8zO5HM", "公式MV"],
+        [186, "晴れ渡る", "single", "まさかの Confession", "LnMcAnc-5UQ", "公式音源"],
+        [187, "アイドルだよ、人生は…", "single", "Oh my pumpkin!", "4ecb6a5NVRY", "公式音源"],
+        [188, "名残り桜", "single", "名残り桜", "Aw2NpveLOFs", "公式MV"],
+        [189, "単!サイ!ボーグ!", "single", "名残り桜", "ZoAJ2OytlOY", "公式音源"],
+        [190, "初恋に似てる", "single", "名残り桜", "aJpsh-_wKPA", "公式音源"],
+        [191, "好き ish", "single", "好き ish", "IT2X9ZtjHoI", "公式MV"],
+        [192, "酸っぱすぎるレモネード", "single", "好き ish", "-C_2ocpYosM", "公式音源"],
+        [193, "君の Doodle", "single", "好き ish", "gyDBhdM45vs", "公式音源"],
+        [194, "会いたかった 2026", "single", "好き ish", "sufdy32WTYs", "公式MV"],
+        [195, "69th シングル 表題曲", "single", "69th シングル", "", ""],
+        [196, "69th シングル カップリング曲①", "single", "69th シングル", "", ""],
+        [197, "69th シングル カップリング曲②", "single", "69th シングル", "", ""],
+        [198, "69th シングル カップリング曲③", "single", "69th シングル", "", ""],
+        [199, "69th シングル カップリング曲④", "single", "69th シングル", "", ""],
+        [200, "69th シングル カップリング曲⑤", "single", "69th シングル", "", ""]
+      ];
+
+      // YouTube未配信曲向けの初期Spotify / Apple Music URL
+      const INITIAL_SUB_MEDIA = {
+        2: {
+          spotifyUrl: 'https://open.spotify.com/intl-ja/track/47v5xTqFWcIa41oZz6fsJo',
+          appleMusicUrl: 'https://music.apple.com/jp/album/1536120261?i=1536120267'
+        },
+        10: {
+          spotifyUrl: 'https://open.spotify.com/intl-ja/track/7csKlefG0nAiqSdieJffDn',
+          appleMusicUrl: 'https://music.apple.com/jp/album/1536122654?i=1536122669'
+        },
+        66: {
+          spotifyUrl: 'https://open.spotify.com/intl-ja/track/7ntInJEUj7yhOYVFLLKK4t',
+          appleMusicUrl: 'https://music.apple.com/jp/album/1536115307?i=1536115391'
+        },
+        92: {
+          spotifyUrl: 'https://open.spotify.com/intl-ja/track/12q3O7moadnUkq6z7Gh6UX',
+          appleMusicUrl: 'https://music.apple.com/jp/album/1536308010?i=1536308011'
+        }
+      };
+
+      // 定番曲の初期コール下書き（漢字のみMIX・指定ガチ恋口上）
+      const STD_MIX = "! あー　よっしゃいくぞー\n! タイガー　ファイアー　サイバー　ファイバー　ダイバー　バイバー　ジャージャー";
+      const JP_MIX = "! あー　もういっちょいくぞー\n! 虎　火　人造　繊維　海女　振動　化繊飛除去";
+      const GACHIKOI = "! 言いたいことがあるんだよ\n! やっぱり○○はかわいいよ\n! 好き好き大好きやっぱ好き\n! やっと見つけたお姫様\n! 俺が生まれてきた理由\n! それは○○に出会うため\n! 俺と一緒に人生歩もう\n! 世界で一番愛してる\n! ア・イ・シ・テ・ル";
+
+      const INITIAL_CALLS = {
+        22: "# 冒頭 円陣\nいつも感謝 冷静に 丁寧に 正確に みんなの夢が叶いますように！\n! AKB〜 チームB！\n\n# イントロ\n" + STD_MIX + "\n\n# 2番前\n" + JP_MIX,
+        36: "# イントロ\n! AKB! 48!\n" + STD_MIX + "\n\n# サビ\n! メンバーの煽りに合わせて「AKB! 48!」＆クラップ",
+        37: "# イントロ\n" + STD_MIX + "\n\n# サビ掛け声\n! 好き！ / 好き！ / 大好き！\n\n# 2番前\n" + JP_MIX,
+        48: "# イントロ\n" + STD_MIX + "\n\n# 1番Aメロ・Bメロ\n! 歌唱メンバーコール（○○！）\n\n# 2番前\n" + JP_MIX,
+        50: "# 冒頭\n! AKB〜！ 48！\n\n# 全体\n! Ho! Ho! ／ AKB! 48!（手拍子＆掛け声）",
+        51: "# イントロ\n" + STD_MIX + "\n\n# 1番Aメロ・Bメロ\n! 歌唱メンバーコール（○○！）\n\n# 2番前\n" + JP_MIX,
+        62: "# イントロ\n" + STD_MIX + "\n\n# サビ掛け声\n! オネストマン！ ／ オー・ネ・ス・ト・マン！\n\n# 2番前\n" + JP_MIX,
+        63: "# メンバー紹介コール\n出演メンバーのパートに合わせて全力コール！\n! ○○推し！ 超絶かわいい ○○！",
+        64: "# イントロ\n" + STD_MIX + "\n\n# 2番前\n" + JP_MIX,
+        71: "# 冒頭\n! 1, 2, 3, 4!\n\n# イントロ\n" + STD_MIX + "\n\n# サビ掛け声\n! I want you! / I need you! / I love you!",
+        81: "# イントロ\n" + STD_MIX + "\n\n# 2番前\n" + JP_MIX,
+        85: "# イントロ\n! オイ！ オイ！\n" + STD_MIX + "\n\n# サビ\n! フライングゲット！",
+        103: "# イントロ\n" + STD_MIX + "\n\n# 2番前\n" + JP_MIX,
+        115: "# イントロ\n" + STD_MIX + "\n\n# 推しコール\n! 歌唱メンバーコール（○○！）\n\n# 間奏 ガチ恋口上\n" + GACHIKOI,
+        117: "# サビ・全体\n! 振りコピ＆クラップで一緒に盛り上がる定番曲！\n! フォーチュンクッキー！（サビ掛け声）",
+        125: "# 1番・2番\n! 47都道府県をリズムに合わせて一緒にコール！\n\n# 間奏 ガチ恋口上\n" + GACHIKOI,
+        127: "# イントロ\n! 好きすぎる！\n" + STD_MIX + "\n\n# 2番前\n" + JP_MIX,
+        147: "# イントロ\n" + STD_MIX + "\n\n# 2番前\n" + JP_MIX,
+        151: "# イントロ\n" + STD_MIX + "\n\n# サビ掛け声\n! Yeah Yeah YeahよりもWOW WOW WOW",
+        164: "# イントロ\n" + STD_MIX + "\n\n# 2番前\n" + JP_MIX,
+        188: "# イントロ\n" + STD_MIX,
+        191: [
+          "# イントロ",
+          "[0:02] ! One, Two, Maybe, Three!（全部一緒に言う）",
+          "[0:11] ! Hey! Hey!（一緒に言う）",
+          "",
+          "# 1番Aメロ",
+          "[0:18] ! ももか！（「終わっちゃう」の後）",
+          "[0:22] ! ももか！（「始まらない」の後）",
+          "[0:28] ! あいちゃん / あづちゃん（どちらか・「自信ない」の後）",
+          "[0:34] ! 超絶かわいい ゆいゆい / なるちゃん（「認めたくない」の後）",
+          "",
+          "# 1番Bメロ（被せ）",
+          "[0:38] ! （ゆなちゃん / ずっきー / かわゆい）×2",
+          "[0:42] ! （こさき / えりい / さえちゃん）×2",
+          "[0:46] ! （えりこ / みう）×2",
+          "[0:49] ! （みずみん / かすみん / あやみん）×2",
+          "[0:52] ! ももかがかわいい！",
+          "",
+          "# 1番サビ",
+          "[0:56] ! Fu Fuu!（「LOVE」の後）",
+          "[0:59] ! Fu! Fu!（「片想い」の後）",
+          "[1:02] ! はーいはい！ はい×4（被せ）",
+          "[1:06] ! 好きish！（サビ中の「好きish」を一緒に言う）",
+          "[1:16] ! 好き好き好き好きish 〜 One, Two, Maybe, Three!（全部一緒に言う）",
+          "",
+          "# 2番Aメロ",
+          "[1:24] ! ゆなちゃん / ずっきー / かわゆい（「知らんぷり」の後）",
+          "[1:30] ! 超絶可愛い こさき / えりい / さえちゃん（「私らしくない」の後）",
+          "",
+          "# 2番Bメロ（被せ）",
+          "[1:34] ! （えりこ / みう）×2",
+          "[1:37] ! （みずみん / かすみん / あやみん）×2",
+          "[1:40] ! ももか ×2",
+          "[1:43] ! （あいちゃん / あづちゃん）×2",
+          "[1:46] ! ゆいなるかわいい！",
+          "",
+          "# 2番サビ",
+          "[1:49] ! Fu Fuu!（「存在」の後）",
+          "[1:53] ! Fu! Fu!（「何かを感じたりしない？」の後）",
+          "[1:56] ! はーいはい！ はい×4（被せ）",
+          "[2:00] ! 好きish！（サビ中の「好きish」を一緒に言う）",
+          "",
+          "# 間奏（オリジナル口上）",
+          "[2:12] ! 言いたいことがあるんだよ やっぱりももかはかわいいよ S・U・K・I・I・S・H AKBが好きish！",
+          "",
+          "# Cメロ〜落ちサビ",
+          "[2:25] ! Yeah! ×4（4回とも一緒に言う）",
+          "[2:39] ! Fuuuuuuuu!（「好きish」の後）",
+          "",
+          "# ラスサビ〜アウトロ",
+          "[2:45] ! Fu Fuu!（「片想い」の後）",
+          "[2:49] ! はーいはい！ はい×4（被せ）",
+          "[2:53] ! 好きish！（サビ中の「好きish」を一緒に言う）",
+          "[3:08] ! HEY! ×2（最後の2回とも一緒に言う）"
+        ].join("\n")
+      };
+
+      // ============================================================
+      // 4. 差分保存（User Diff）管理
+      //    本体更新時にステータス維持＆未編集項目は最新デフォルトを自動適用
+      // ============================================================
+      let defaultSongsMap = new Map();
+      let userDiffs = {}; // { [id]: { status?, title?, youtubeId?, youtubeLabel?, spotifyUrl?, appleMusicUrl?, callText?, penlight?, note? } }
+
+      function initDefaultSongs() {
+        defaultSongsMap.clear();
+        RAW_SONGS.forEach(item => {
+          const id = item[0];
+          const subMedia = INITIAL_SUB_MEDIA[id] || {};
+          defaultSongsMap.set(id, {
+            id: id,
+            title: item[1],
+            category: item[2],
+            group: item[3],
+            youtubeId: item[4] || '',
+            youtubeLabel: item[5] || '',
+            spotifyUrl: subMedia.spotifyUrl || '',
+            appleMusicUrl: subMedia.appleMusicUrl || '',
+            status: 'todo',
+            callText: INITIAL_CALLS[id] || '',
+            penlight: '',
+            note: ''
+          });
+        });
+      }
+
+      function loadUserDiffs() {
+        try {
+          const raw = localStorage.getItem(DIFF_STORAGE_KEY);
+          if (!raw) return {};
+          const parsed = JSON.parse(raw);
+          return (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) ? parsed : {};
+        } catch (err) {
+          console.error('loadUserDiffs error:', err);
+          return {};
+        }
+      }
+
+      function saveUserDiffs() {
+        try {
+          localStorage.setItem(DIFF_STORAGE_KEY, JSON.stringify(userDiffs));
+        } catch (err) {
+          console.error('saveUserDiffs error:', err);
+          showToast('保存に失敗しました', true);
+        }
+      }
+
+      function getMergedSong(id) {
+        const def = defaultSongsMap.get(id);
+        if (!def) return null;
+        const diff = userDiffs[id];
+        if (!diff) return Object.assign({}, def);
+        return {
+          id: def.id,
+          title: (typeof diff.title === 'string') ? diff.title : def.title,
+          category: def.category,
+          group: def.group,
+          youtubeId: (typeof diff.youtubeId === 'string') ? diff.youtubeId : def.youtubeId,
+          youtubeLabel: (typeof diff.youtubeLabel === 'string') ? diff.youtubeLabel : def.youtubeLabel,
+          spotifyUrl: (typeof diff.spotifyUrl === 'string') ? diff.spotifyUrl : def.spotifyUrl,
+          appleMusicUrl: (typeof diff.appleMusicUrl === 'string') ? diff.appleMusicUrl : def.appleMusicUrl,
+          status: STATUS_META[diff.status] ? diff.status : def.status,
+          callText: (typeof diff.callText === 'string') ? diff.callText : def.callText,
+          penlight: (typeof diff.penlight === 'string') ? diff.penlight : def.penlight,
+          note: (typeof diff.note === 'string') ? diff.note : def.note
+        };
+      }
+
+      function getAllSongs() {
+        const arr = [];
+        RAW_SONGS.forEach(item => {
+          arr.push(getMergedSong(item[0]));
+        });
+        return arr;
+      }
+
+      function updateSongDiff(id, patch) {
+        const def = defaultSongsMap.get(id);
+        if (!def) return;
+        const current = Object.assign({}, userDiffs[id] || {});
+        const editableKeys = ['status', 'title', 'youtubeId', 'youtubeLabel', 'spotifyUrl', 'appleMusicUrl', 'callText', 'penlight', 'note'];
+
+        editableKeys.forEach(key => {
+          if (Object.prototype.hasOwnProperty.call(patch, key)) {
+            if (patch[key] === def[key]) {
+              delete current[key];
+            } else {
+              current[key] = patch[key];
+            }
+          }
+        });
+
+        if (Object.keys(current).length === 0) {
+          delete userDiffs[id];
+        } else {
+          userDiffs[id] = current;
+        }
+        saveUserDiffs();
+      }
+
+      // ============================================================
+      // 5. アプリ状態管理
+      // ============================================================
+      let uiState = {
+        query: '',
+        viewMode: 'group', // 'group' | 'number'
+        filter: 'all',     // 'all' | 'cat:team' | 'cat:single' | 'cat:album' | 'cat:unit' | 'st:practicing' | 'st:done' | 'call'
+        teamSub: 'all'     // 'all' | チーム名
+      };
+
+      let collapsedGroups = new Set();
+      let navOrderedIds = [];
+      let activeSongId = null;
+      let activeDetailTab = 'call'; // 'call' | 'edit'
+      let activeMediaSource = 'youtube'; // 'youtube' | 'spotify' | 'apple'
+      let isCompactPlayer = false;
+
+      // YouTube Player
+      let ytApiReady = false;
+      let ytPlayer = null;
+      let ytPollTimer = null;
+      let parsedLines = [];
+      let lastSyncKey = '';
+
+      window.onYouTubeIframeAPIReady = function () {
+        ytApiReady = true;
+        if (activeSongId !== null && activeMediaSource === 'youtube') {
+          const song = getMergedSong(activeSongId);
+          if (song && song.youtubeId) mountYoutubePlayer(song.youtubeId);
+        }
+      };
+
+      // ============================================================
+      // 6. URL解析・ユーティリティ
+      // ============================================================
+      function pad2(n) {
+        return String(n).padStart(2, '0');
+      }
+
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      function formatSec(sec) {
+        const s = Math.max(0, Math.floor(sec || 0));
+        return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+      }
+
+      // YouTube / YouTube Music / Shorts / youtu.be / 11桁ID すべて対応
+      function extractYoutubeId(input) {
+        if (!input || typeof input !== 'string') return '';
+        const t = input.trim();
+        if (/^[a-zA-Z0-9_-]{11}$/.test(t)) return t;
+        const m = t.match(/(?:v=|\/shorts\/|\/embed\/|\/live\/|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+        return m ? m[1] : '';
+      }
+
+      // Spotify URL → embed URL 変換（/intl-ja/ 等にも対応）
+      function toSpotifyEmbedUrl(url) {
+        if (!url || typeof url !== 'string') return '';
+        const m = url.trim().match(/open\.spotify\.com\/(?:intl-[a-z-]+\/)?(?:embed\/)?(track|album|playlist|episode)\/([a-zA-Z0-9]+)/);
+        if (!m) return '';
+        return 'https://open.spotify.com/embed/' + m[1] + '/' + m[2] + '?utm_source=generator&theme=0';
+      }
+
+      // Apple Music URL → embed URL 変換
+      function toAppleMusicEmbedUrl(url) {
+        if (!url || typeof url !== 'string') return '';
+        const t = url.trim();
+        if (/^https?:\/\/embed\.music\.apple\.com\//.test(t)) return t;
+        if (/^https?:\/\/music\.apple\.com\//.test(t)) {
+          return t.replace(/^https?:\/\/music\.apple\.com\//, 'https://embed.music.apple.com/');
+        }
+        return '';
+      }
+
+      function parseCallText(text) {
+        if (!text || !text.trim()) return [];
+        return text.split(/\r?\n/).map((line, index) => {
+          const trimmed = line.trim();
+          if (!trimmed) return { index, type: 'empty', content: '' };
+
+          const tsMatch = trimmed.match(/^\[?(\d{1,2}):(\d{2})\]?\s*(.*)$/);
+          if (tsMatch) {
+            const mins = parseInt(tsMatch[1], 10);
+            const secs = parseInt(tsMatch[2], 10);
+            if (secs < 60) {
+              let body = tsMatch[3] || '';
+              let isCall = false;
+              if (/^[!！]\s*/.test(body)) {
+                isCall = true;
+                body = body.replace(/^[!！]\s*/, '');
+              }
+              return {
+                index,
+                type: 'timestamp',
+                isCall,
+                timeSec: mins * 60 + secs,
+                timeLabel: mins + ':' + tsMatch[2],
+                content: body
+              };
+            }
+          }
+
+          if (/^#\s+/.test(trimmed)) {
+            return { index, type: 'heading', content: trimmed.replace(/^#\s+/, '') };
+          }
+          if (/^[!！]\s*/.test(trimmed)) {
+            return { index, type: 'call', content: trimmed.replace(/^[!！]\s*/, '') };
+          }
+          return { index, type: 'memo', content: line };
+        });
+      }
+
+      function copyToClipboard(text) {
+        try {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          ta.setAttribute('readonly', '');
+          ta.style.position = 'fixed';
+          ta.style.left = '-9999px';
+          document.body.appendChild(ta);
+          ta.select();
+          const ok = document.execCommand('copy');
+          document.body.removeChild(ta);
+          return ok;
+        } catch (err) {
+          return false;
+        }
+      }
+
+      function showToast(msg, isError) {
+        const el = document.getElementById('toastContainer');
+        el.innerHTML = '<div class="toast-msg' + (isError ? ' error' : '') + '">' + escapeHtml(msg) + '</div>';
+        clearTimeout(showToast._timer);
+        showToast._timer = setTimeout(() => { el.innerHTML = ''; }, 2200);
+      }
+
+      // ============================================================
+      // 7. テーマ管理
+      // ============================================================
+      function applyTheme(theme) {
+        const safe = (theme === 'light') ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', safe);
+        document.getElementById('themeDarkBtn').classList.toggle('active', safe === 'dark');
+        document.getElementById('themeLightBtn').classList.toggle('active', safe === 'light');
+        try { localStorage.setItem(THEME_STORAGE_KEY, safe); } catch (e) {}
+      }
+
+      function initTheme() {
+        let saved = 'dark';
+        try {
+          const t = localStorage.getItem(THEME_STORAGE_KEY);
+          if (t === 'light' || t === 'dark') saved = t;
+        } catch (e) {}
+        applyTheme(saved);
+      }
+
+      // ============================================================
+      // 8. 進捗＆フィルターUI描画
+      // ============================================================
+      function updateHeaderAndControls() {
+        const all = getAllSongs();
+        let done = 0, practicing = 0;
+        all.forEach(s => {
+          if (s.status === 'done') done++;
+          else if (s.status === 'practicing') practicing++;
+        });
+
+        const total = all.length || 200;
+        const donePct = Math.round((done / total) * 100);
+        const practPct = Math.round((practicing / total) * 100);
+
+        document.getElementById('statDone').textContent = done;
+        document.getElementById('statPercent').textContent = donePct + '%';
+        document.getElementById('progressBarDone').style.width = donePct + '%';
+        document.getElementById('progressBarPracticing').style.width = practPct + '%';
+
+        document.getElementById('viewGroupBtn').classList.toggle('active', uiState.viewMode === 'group');
+        document.getElementById('viewNumberBtn').classList.toggle('active', uiState.viewMode === 'number');
+        document.getElementById('foldBtnsWrap').classList.toggle('hidden', uiState.viewMode !== 'group');
+
+        document.querySelectorAll('#mainFilterRow .chip-btn').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.filter === uiState.filter);
+        });
+
+        // チーム・公演選択時のみサブチップ表示
+        const teamSubBox = document.getElementById('teamSubBox');
+        const teamSubRow = document.getElementById('teamSubRow');
+        if (uiState.filter === 'cat:team') {
+          teamSubBox.classList.remove('hidden');
+          const items = ['all'].concat(TEAM_ORDER);
+          teamSubRow.innerHTML = items.map(name => {
+            const label = (name === 'all') ? 'すべて' : name;
+            const cls = (uiState.teamSub === name) ? ' active-sub' : '';
+            return '<button type="button" class="chip-btn' + cls + '" data-team-sub="' + escapeHtml(name) + '">' + escapeHtml(label) + '</button>';
+          }).join('');
+        } else {
+          teamSubBox.classList.add('hidden');
+        }
+      }
+
+      // ============================================================
+      // 9. 曲リスト描画
+      // ============================================================
+      function buildSongCard(song, showGroup) {
+        const st = STATUS_META[song.status] || STATUS_META.todo;
+        const hasCall = Boolean(song.callText && song.callText.trim());
+        const hasMedia = Boolean(song.youtubeId || toSpotifyEmbedUrl(song.spotifyUrl) || toAppleMusicEmbedUrl(song.appleMusicUrl));
+        const hasPenlight = Boolean(song.penlight && song.penlight.trim());
+
+        return (
+          '<div class="song-card' + (song.status === 'done' ? ' status-done' : '') + '" data-song-id="' + song.id + '">' +
+            '<div class="song-card-left">' +
+              '<div class="song-num">' + pad2(song.id) + '</div>' +
+              '<div class="song-info">' +
+                '<div class="song-title">' + escapeHtml(song.title) + '</div>' +
+                '<div class="song-badges">' +
+                  (showGroup ? '<span class="badge badge-group">' + escapeHtml(song.group) + '</span>' : '') +
+                  (hasCall ? '<span class="badge badge-call">コールあり</span>' : '') +
+                  (hasMedia ? '<span class="badge badge-media">▶ 音源</span>' : '') +
+                  (hasPenlight ? '<span class="badge badge-penlight">🔦 ' + escapeHtml(song.penlight) + '</span>' : '') +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+            '<button type="button" class="quick-status-btn ' + st.cls + '" data-quick-status="' + song.id + '" aria-label="ステータス切替">' +
+              '<span style="font-size:12px;line-height:1;">' + st.icon + '</span>' +
+              '<span>' + st.label + '</span>' +
+            '</button>' +
+          '</div>'
+        );
+      }
+
+      function renderSongList() {
+        const all = getAllSongs();
+        const q = uiState.query.trim().toLowerCase();
+
+        const matched = all.filter(s => {
+          if (uiState.filter.startsWith('cat:')) {
+            const cat = uiState.filter.slice(4);
+            if (s.category !== cat) return false;
+            if (cat === 'team' && uiState.teamSub !== 'all' && s.group !== uiState.teamSub) return false;
+          } else if (uiState.filter.startsWith('st:')) {
+            if (s.status !== uiState.filter.slice(3)) return false;
+          } else if (uiState.filter === 'call') {
+            if (!(s.callText && s.callText.trim())) return false;
+          }
+
+          if (q) {
+            const hit = s.title.toLowerCase().includes(q)
+              || pad2(s.id).includes(q)
+              || String(s.id) === q
+              || s.group.toLowerCase().includes(q);
+            if (!hit) return false;
+          }
+          return true;
+        });
+
+        const listEl = document.getElementById('songList');
+        const emptyEl = document.getElementById('emptyState');
+        document.getElementById('resultCount').textContent = matched.length + '曲を表示中';
+
+        if (matched.length === 0) {
+          navOrderedIds = [];
+          listEl.innerHTML = '';
+          emptyEl.classList.remove('hidden');
+          return;
+        }
+        emptyEl.classList.add('hidden');
+
+        if (uiState.viewMode === 'number') {
+          navOrderedIds = matched.map(s => s.id);
+          listEl.innerHTML = matched.map(s => buildSongCard(s, true)).join('');
+          return;
+        }
+
+        // グループ別表示
+        const gMap = new Map();
+        matched.forEach(s => {
+          const gKey = s.category + '::' + s.group;
+          if (!gMap.has(gKey)) gMap.set(gKey, { key: gKey, category: s.category, name: s.group, songs: [] });
+          gMap.get(gKey).songs.push(s);
+        });
+
+        const keys = [];
+        GROUP_ORDER.forEach(k => { if (gMap.has(k)) keys.push(k); });
+        gMap.forEach((_, k) => { if (keys.indexOf(k) === -1) keys.push(k); });
+
+        navOrderedIds = [];
+        listEl.innerHTML = keys.map(k => {
+          const grp = gMap.get(k);
+          grp.songs.forEach(s => navOrderedIds.push(s.id));
+          const doneCnt = grp.songs.filter(s => s.status === 'done').length;
+          const catInfo = CAT_META[grp.category] || { label: '', cls: '' };
+          const isOpen = !collapsedGroups.has(k);
+
+          return (
+            '<section class="group-section' + (isOpen ? ' open' : '') + '">' +
+              '<button type="button" class="group-header-btn" data-toggle-group="' + escapeHtml(k) + '">' +
+                '<div class="group-head-left">' +
+                  '<span class="cat-pill ' + catInfo.cls + '">' + escapeHtml(catInfo.label) + '</span>' +
+                  '<span class="group-title">' + escapeHtml(grp.name) + '</span>' +
+                '</div>' +
+                '<div class="group-head-right">' +
+                  '<span><strong>' + doneCnt + '</strong>/' + grp.songs.length + '</span>' +
+                  '<span class="group-chevron">▼</span>' +
+                '</div>' +
+              '</button>' +
+              '<div class="group-songs">' +
+                grp.songs.map(s => buildSongCard(s, false)).join('') +
+              '</div>' +
+            '</section>'
+          );
+        }).join('');
+      }
+
+      function cycleStatus(songId) {
+        const song = getMergedSong(songId);
+        if (!song) return;
+        const order = ['todo', 'practicing', 'done'];
+        const nextSt = order[(order.indexOf(song.status) + 1) % order.length];
+        updateSongDiff(songId, { status: nextSt });
+        updateHeaderAndControls();
+        renderSongList();
+        showToast(pad2(song.id) + '. ' + song.title + ' → ' + STATUS_META[nextSt].label, false);
+      }
+
+      // ============================================================
+      // 10. 曲詳細モーダル＆マルチ音源プレイヤー制御
+      // ============================================================
+      function openSongModal(songId) {
+        const song = getMergedSong(songId);
+        if (!song) return;
+        activeSongId = songId;
+        document.body.classList.add('modal-open');
+        document.getElementById('songModal').classList.remove('hidden');
+        renderSongDetail(song);
+      }
+
+      function closeSongModal() {
+        stopYtPolling();
+        destroyYtPlayer();
+        document.getElementById('spotifyIframe').src = '';
+        document.getElementById('appleIframe').src = '';
+        activeSongId = null;
+        document.getElementById('songModal').classList.add('hidden');
+        document.body.classList.remove('modal-open');
+      }
+
+      function getAvailableSources(song) {
+        const list = [];
+        if (song.youtubeId) list.push({ id: 'youtube', label: 'YouTube' });
+        if (toSpotifyEmbedUrl(song.spotifyUrl)) list.push({ id: 'spotify', label: 'Spotify' });
+        if (toAppleMusicEmbedUrl(song.appleMusicUrl)) list.push({ id: 'apple', label: 'Apple Music' });
+        return list;
+      }
+
+      function renderMediaArea(song, preferredSource) {
+        const sources = getAvailableSources(song);
+        const tabsEl = document.getElementById('sourceTabs');
+        const ytPane = document.getElementById('ytPane');
+        const spPane = document.getElementById('spotifyPane');
+        const apPane = document.getElementById('applePane');
+        const noPane = document.getElementById('noMediaPane');
+
+        // 歌詞・検索リンク更新
+        const lyricsUrl = 'https://www.google.com/search?q=' + encodeURIComponent('AKB48 ' + song.title + ' 歌詞');
+        document.getElementById('lyricsLinkYt').href = lyricsUrl;
+        document.getElementById('lyricsLinkSp').href = lyricsUrl;
+        document.getElementById('lyricsLinkAp').href = lyricsUrl;
+        document.getElementById('lyricsLinkEmpty').href = lyricsUrl;
+        document.getElementById('ytSearchBtn').href = 'https://www.youtube.com/results?search_query=' + encodeURIComponent('AKB48 ' + song.title);
+
+        if (sources.length === 0) {
+          destroyYtPlayer();
+          document.getElementById('spotifyIframe').src = '';
+          document.getElementById('appleIframe').src = '';
+          tabsEl.classList.add('hidden');
+          ytPane.classList.add('hidden');
+          spPane.classList.add('hidden');
+          apPane.classList.add('hidden');
+          noPane.classList.remove('hidden');
+          return;
+        }
+
+        noPane.classList.add('hidden');
+        const hasPreferred = sources.some(s => s.id === preferredSource);
+        activeMediaSource = hasPreferred ? preferredSource : sources[0].id;
+
+        // 複数音源がある曲だけタブを表示（1種類のみならタブを隠してスッキリ）
+        if (sources.length > 1) {
+          tabsEl.classList.remove('hidden');
+          tabsEl.innerHTML = sources.map(src => {
+            let cls = '';
+            if (src.id === activeMediaSource) {
+              cls = src.id === 'youtube' ? ' active-yt' : (src.id === 'spotify' ? ' active-spotify' : ' active-apple');
+            }
+            return '<button type="button" class="source-tab-btn' + cls + '" data-media-src="' + src.id + '">' + src.label + '</button>';
+          }).join('');
+        } else {
+          tabsEl.classList.add('hidden');
+        }
+
+        // 各ペイン切替
+        if (activeMediaSource === 'youtube') {
+          document.getElementById('spotifyIframe').src = '';
+          document.getElementById('appleIframe').src = '';
+          spPane.classList.add('hidden');
+          apPane.classList.add('hidden');
+          ytPane.classList.remove('hidden');
+
+          document.getElementById('ytLabelText').textContent = song.youtubeLabel || '';
+          document.getElementById('ytDirectLink').href = 'https://www.youtube.com/watch?v=' + encodeURIComponent(song.youtubeId);
+          document.getElementById('ytFrameWrap').classList.toggle('compact', isCompactPlayer);
+          document.getElementById('compactBtn').textContent = isCompactPlayer ? '通常' : 'コンパクト';
+          mountYoutubePlayer(song.youtubeId);
+        } else if (activeMediaSource === 'spotify') {
+          destroyYtPlayer();
+          document.getElementById('appleIframe').src = '';
+          ytPane.classList.add('hidden');
+          apPane.classList.add('hidden');
+          spPane.classList.remove('hidden');
+
+          document.getElementById('spotifyIframe').src = toSpotifyEmbedUrl(song.spotifyUrl);
+          document.getElementById('spotifyDirectLink').href = song.spotifyUrl;
+        } else if (activeMediaSource === 'apple') {
+          destroyYtPlayer();
+          document.getElementById('spotifyIframe').src = '';
+          ytPane.classList.add('hidden');
+          spPane.classList.add('hidden');
+          apPane.classList.remove('hidden');
+
+          document.getElementById('appleIframe').src = toAppleMusicEmbedUrl(song.appleMusicUrl);
+          document.getElementById('appleDirectLink').href = song.appleMusicUrl;
+        }
+      }
+
+      function renderMemoBadges(song) {
+        const wrap = document.getElementById('memoBadges');
+        const chips = [];
+        if (song.penlight && song.penlight.trim()) {
+          chips.push('<span class="memo-chip">🔦 ' + escapeHtml(song.penlight) + '</span>');
+        }
+        if (song.note && song.note.trim()) {
+          chips.push('<span class="memo-chip note">💡 ' + escapeHtml(song.note) + '</span>');
+        }
+        if (chips.length === 0) {
+          wrap.classList.add('hidden');
+          wrap.innerHTML = '';
+        } else {
+          wrap.classList.remove('hidden');
+          wrap.innerHTML = chips.join('');
+        }
+      }
+
+      function renderSongDetail(song) {
+        document.getElementById('modalSongNum').textContent = pad2(song.id);
+        document.getElementById('modalSongTitle').textContent = song.title;
+        document.getElementById('modalGroupBadge').textContent = song.group;
+        updateDetailStatusButtons(song.status);
+
+        // プレイヤー描画
+        renderMediaArea(song, 'youtube');
+
+        // メモバッジ
+        renderMemoBadges(song);
+
+        // 編集フォームへ値セット
+        document.getElementById('editCallTextarea').value = song.callText || '';
+        document.getElementById('editPenlightInput').value = song.penlight || '';
+        document.getElementById('editNoteInput').value = song.note || '';
+        document.getElementById('editYtUrlInput').value = song.youtubeId ? ('https://www.youtube.com/watch?v=' + song.youtubeId) : '';
+        document.getElementById('editSpotifyUrlInput').value = song.spotifyUrl || '';
+        document.getElementById('editAppleUrlInput').value = song.appleMusicUrl || '';
+        document.getElementById('editTitleInput').value = song.title || '';
+
+        // コール閲覧表示
+        renderCallLines(song.callText);
+        switchDetailTab('call');
+
+        // 前後ナビ
+        const list = navOrderedIds.length > 0 ? navOrderedIds : RAW_SONGS.map(r => r[0]);
+        const pos = Math.max(0, list.indexOf(song.id));
+        document.getElementById('modalNavPos').textContent = (pos + 1) + ' / ' + list.length;
+        document.getElementById('prevSongBtn').disabled = pos <= 0;
+        document.getElementById('nextSongBtn').disabled = pos >= list.length - 1;
+      }
+
+      function updateDetailStatusButtons(status) {
+        document.querySelectorAll('.status-seg-btn').forEach(btn => {
+          btn.className = 'status-seg-btn';
+          if (btn.dataset.mstatus === status) btn.classList.add('active-' + status);
+        });
+      }
+
+      function switchDetailTab(tab) {
+        activeDetailTab = tab;
+        document.getElementById('tabCallBtn').classList.toggle('active', tab === 'call');
+        document.getElementById('tabEditBtn').classList.toggle('active', tab === 'edit');
+        document.getElementById('callViewPane').classList.toggle('hidden', tab !== 'call');
+        document.getElementById('callEditPane').classList.toggle('hidden', tab !== 'edit');
+        document.getElementById('autoFollowWrap').classList.toggle('hidden', tab !== 'call');
+      }
+
+      function renderCallLines(text) {
+        const container = document.getElementById('callLinesContainer');
+        const emptyEl = document.getElementById('callEmptyState');
+        parsedLines = parseCallText(text);
+        lastSyncKey = '';
+
+        if (parsedLines.length === 0) {
+          container.innerHTML = '';
+          emptyEl.classList.remove('hidden');
+          return;
+        }
+        emptyEl.classList.add('hidden');
+
+        container.innerHTML = parsedLines.map((line, i) => {
+          if (line.type === 'empty') return '<div class="call-spacer"></div>';
+          if (line.type === 'heading') return '<div><span class="call-heading">' + escapeHtml(line.content) + '</span></div>';
+          if (line.type === 'timestamp') {
+            return (
+              '<button type="button" class="ts-line-btn' + (line.isCall ? ' is-call' : '') + '" data-seek-sec="' + line.timeSec + '" data-line-idx="' + i + '">' +
+                '<span class="ts-tag">' + escapeHtml(line.timeLabel) + '</span>' +
+                '<span class="ts-body">' +
+                  escapeHtml(line.content) +
+                  '<span class="countdown-badge hidden" data-cd-idx="' + i + '"></span>' +
+                '</span>' +
+              '</button>'
+            );
+          }
+          if (line.type === 'call') return '<div class="call-box">' + escapeHtml(line.content) + '</div>';
+          return '<div class="memo-line">' + escapeHtml(line.content) + '</div>';
+        }).join('');
+      }
+
+      // ============================================================
+      // 11. YouTube IFrame API（エラー153対策＋同期＆カウントダウン）
+      // ============================================================
+      function destroyYtPlayer() {
+        stopYtPolling();
+        if (ytPlayer && typeof ytPlayer.destroy === 'function') {
+          try { ytPlayer.destroy(); } catch (e) {}
+        }
+        ytPlayer = null;
+        const mount = document.getElementById('ytPlayerMount');
+        if (mount) mount.innerHTML = '';
+        document.getElementById('ytTimeDisplay').textContent = '0:00';
+      }
+
+      function enforceReferrerPolicy() {
+        const mount = document.getElementById('ytPlayerMount');
+        if (!mount) return;
+        const iframe = mount.querySelector('iframe');
+        if (iframe) {
+          iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+          iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+        }
+      }
+
+      function mountYoutubePlayer(videoId) {
+        if (!videoId) return;
+        destroyYtPlayer();
+        const mount = document.getElementById('ytPlayerMount');
+        const safeOrigin = (window.location && window.location.origin && window.location.origin !== 'null')
+          ? window.location.origin
+          : '';
+
+        if (ytApiReady && window.YT && typeof window.YT.Player === 'function') {
+          const div = document.createElement('div');
+          div.id = 'ytPlayer_' + Date.now();
+          div.style.width = '100%';
+          div.style.height = '100%';
+          mount.appendChild(div);
+
+          const pVars = { rel: 0, playsinline: 1, modestbranding: 1 };
+          if (safeOrigin) pVars.origin = safeOrigin;
+
+          try {
+            ytPlayer = new window.YT.Player(div.id, {
+              videoId: videoId,
+              width: '100%',
+              height: '100%',
+              playerVars: pVars,
+              events: {
+                onReady: function () {
+                  enforceReferrerPolicy();
+                  startYtPolling();
+                },
+                onStateChange: function (ev) {
+                  if (ev.data === window.YT.PlayerState.PLAYING) startYtPolling();
+                }
+              }
+            });
+            setTimeout(enforceReferrerPolicy, 100);
+            return;
+          } catch (err) {
+            console.error('YT.Player fallback:', err);
+          }
+        }
+
+        const originParam = safeOrigin ? ('&origin=' + encodeURIComponent(safeOrigin)) : '';
+        mount.innerHTML =
+          '<iframe style="width:100%;height:100%;border:0;" ' +
+          'referrerpolicy="strict-origin-when-cross-origin" ' +
+          'src="https://www.youtube.com/embed/' + encodeURIComponent(videoId) + '?playsinline=1&rel=0&modestbranding=1' + originParam + '" ' +
+          'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+      }
+
+      function getYtTime() {
+        if (ytPlayer && typeof ytPlayer.getCurrentTime === 'function') {
+          try { return ytPlayer.getCurrentTime() || 0; } catch (e) { return 0; }
+        }
+        return null;
+      }
+
+      function seekYt(sec) {
+        if (ytPlayer && typeof ytPlayer.seekTo === 'function') {
+          try {
+            ytPlayer.seekTo(sec, true);
+            if (typeof ytPlayer.playVideo === 'function') ytPlayer.playVideo();
+            updateSyncState(sec, false);
+            return;
+          } catch (e) {}
+        }
+        showToast('YouTube再生時にタップでジャンプできます', false);
+      }
+
+      function startYtPolling() {
+        stopYtPolling();
+        ytPollTimer = setInterval(() => {
+          const sec = getYtTime();
+          if (sec === null) return;
+          document.getElementById('ytTimeDisplay').textContent = formatSec(sec);
+          if (activeDetailTab === 'call') updateSyncState(sec, true);
+        }, 250);
+      }
+
+      function stopYtPolling() {
+        if (ytPollTimer) {
+          clearInterval(ytPollTimer);
+          ytPollTimer = null;
+        }
+      }
+
+      function updateSyncState(currentSec, autoScroll) {
+        let activeIdx = -1, activeTime = -1;
+        let nextIdx = -1, nextTime = Infinity;
+
+        parsedLines.forEach((line, idx) => {
+          if (line.type !== 'timestamp') return;
+          if (line.timeSec <= currentSec + 0.25 && line.timeSec >= activeTime) {
+            activeTime = line.timeSec;
+            activeIdx = idx;
+          }
+          if (line.timeSec > currentSec + 0.25 && line.timeSec < nextTime) {
+            nextTime = line.timeSec;
+            nextIdx = idx;
+          }
+        });
+
+        const remainSec = (nextIdx !== -1) ? Math.max(1, Math.ceil(nextTime - currentSec)) : -1;
+        const key = activeIdx + '|' + nextIdx + '|' + remainSec;
+        if (key === lastSyncKey) return;
+
+        const prevActive = lastSyncKey ? parseInt(lastSyncKey.split('|')[0], 10) : -1;
+        lastSyncKey = key;
+
+        document.querySelectorAll('.ts-line-btn').forEach(el => {
+          const idx = parseInt(el.dataset.lineIdx, 10);
+          const isAct = (idx === activeIdx);
+          const isNxt = (idx === nextIdx);
+          el.classList.toggle('ts-active', isAct);
+          el.classList.toggle('ts-next', isNxt);
+
+          const cd = el.querySelector('[data-cd-idx]');
+          if (cd) {
+            if (isNxt && remainSec > 0) {
+              cd.textContent = 'あと' + remainSec + '秒';
+              cd.classList.remove('hidden');
+            } else {
+              cd.classList.add('hidden');
+            }
+          }
+
+          if (isAct && idx !== prevActive && autoScroll && document.getElementById('autoFollowCheck').checked) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        });
+      }
+
+      function insertAtCursor(textarea, text) {
+        const start = textarea.selectionStart != null ? textarea.selectionStart : textarea.value.length;
+        const end = textarea.selectionEnd != null ? textarea.selectionEnd : textarea.value.length;
+        const before = textarea.value.slice(0, start);
+        const after = textarea.value.slice(end);
+        const prefix = (before.length > 0 && !before.endsWith('\n')) ? '\n' : '';
+        const ins = prefix + text;
+        textarea.value = before + ins + after;
+        const pos = start + ins.length;
+        textarea.focus();
+        textarea.setSelectionRange(pos, pos);
+      }
+
+      // ============================================================
+      // 12. コール辞典描画
+      // ============================================================
+      function renderGuideModal() {
+        const order = ['standard', 'japanese', 'ainu', 'gachikoi'];
+        document.getElementById('guideContent').innerHTML = order.map(k => {
+          const item = CALL_TEMPLATES[k];
+          return (
+            '<div class="info-card">' +
+              '<div class="info-card-head">' +
+                '<h3 class="info-card-title">' + escapeHtml(item.title) + '</h3>' +
+                '<button type="button" class="btn-secondary" style="padding: 4px 9px; font-size: 11px;" data-copy-guide="' + k + '">📋 コピー</button>' +
+              '</div>' +
+              '<p class="info-card-desc">' + escapeHtml(item.desc) + '</p>' +
+              '<div class="info-card-pre">' + escapeHtml(item.guideText) + '</div>' +
+            '</div>'
+          );
+        }).join('');
+      }
+
+      // ============================================================
+      // 13. イベント設定
+      // ============================================================
+      function bindEvents() {
+        // 検索
+        const searchInput = document.getElementById('searchInput');
+        const clearBtn = document.getElementById('clearSearchBtn');
+        searchInput.addEventListener('input', e => {
+          uiState.query = e.target.value;
+          clearBtn.classList.toggle('hidden', !uiState.query);
+          renderSongList();
+        });
+        clearBtn.addEventListener('click', () => {
+          searchInput.value = '';
+          uiState.query = '';
+          clearBtn.classList.add('hidden');
+          renderSongList();
+        });
+
+        // 表示切替＆グループ一括開閉
+        document.getElementById('viewGroupBtn').addEventListener('click', () => {
+          uiState.viewMode = 'group';
+          updateHeaderAndControls();
+          renderSongList();
+        });
+        document.getElementById('viewNumberBtn').addEventListener('click', () => {
+          uiState.viewMode = 'number';
+          updateHeaderAndControls();
+          renderSongList();
+        });
+        document.getElementById('expandAllBtn').addEventListener('click', () => {
+          collapsedGroups.clear();
+          renderSongList();
+        });
+        document.getElementById('collapseAllBtn').addEventListener('click', () => {
+          GROUP_ORDER.forEach(k => collapsedGroups.add(k));
+          renderSongList();
+        });
+
+        // 1行メインフィルター
+        document.querySelectorAll('#mainFilterRow .chip-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            uiState.filter = btn.dataset.filter;
+            if (uiState.filter !== 'cat:team') uiState.teamSub = 'all';
+            updateHeaderAndControls();
+            renderSongList();
+          });
+        });
+
+        // チーム・公演サブフィルター
+        document.getElementById('teamSubRow').addEventListener('click', e => {
+          const btn = e.target.closest('[data-team-sub]');
+          if (!btn) return;
+          uiState.teamSub = btn.dataset.teamSub;
+          updateHeaderAndControls();
+          renderSongList();
+        });
+
+        document.getElementById('resetFiltersBtn').addEventListener('click', () => {
+          uiState.query = '';
+          uiState.filter = 'all';
+          uiState.teamSub = 'all';
+          searchInput.value = '';
+          clearBtn.classList.add('hidden');
+          updateHeaderAndControls();
+          renderSongList();
+        });
+
+        // リストクリック（グループ開閉 / ステータス切替 / 曲詳細）
+        document.getElementById('songList').addEventListener('click', e => {
+          const toggle = e.target.closest('[data-toggle-group]');
+          if (toggle) {
+            const k = toggle.dataset.toggleGroup;
+            if (collapsedGroups.has(k)) collapsedGroups.delete(k);
+            else collapsedGroups.add(k);
+            const sec = toggle.closest('.group-section');
+            if (sec) sec.classList.toggle('open', !collapsedGroups.has(k));
+            return;
+          }
+
+          const qBtn = e.target.closest('[data-quick-status]');
+          if (qBtn) {
+            e.stopPropagation();
+            cycleStatus(parseInt(qBtn.dataset.quickStatus, 10));
+            return;
+          }
+
+          const card = e.target.closest('[data-song-id]');
+          if (card) openSongModal(parseInt(card.dataset.songId, 10));
+        });
+
+        // 曲詳細モーダル制御
+        document.getElementById('closeSongModalBtn').addEventListener('click', closeSongModal);
+        document.getElementById('songModal').addEventListener('click', e => {
+          if (e.target.id === 'songModal') closeSongModal();
+        });
+
+        // モーダル内ステータス切替
+        document.querySelectorAll('.status-seg-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            if (activeSongId === null) return;
+            const st = btn.dataset.mstatus;
+            updateSongDiff(activeSongId, { status: st });
+            updateDetailStatusButtons(st);
+            updateHeaderAndControls();
+            renderSongList();
+          });
+        });
+
+        // マルチ音源タブ切替
+        document.getElementById('sourceTabs').addEventListener('click', e => {
+          const btn = e.target.closest('[data-media-src]');
+          if (!btn || activeSongId === null) return;
+          const song = getMergedSong(activeSongId);
+          if (song) renderMediaArea(song, btn.dataset.mediaSrc);
+        });
+
+        // コンパクト表示切替
+        document.getElementById('compactBtn').addEventListener('click', () => {
+          isCompactPlayer = !isCompactPlayer;
+          document.getElementById('ytFrameWrap').classList.toggle('compact', isCompactPlayer);
+          document.getElementById('compactBtn').textContent = isCompactPlayer ? '通常' : 'コンパクト';
+        });
+
+        // コール / 編集タブ切替
+        document.getElementById('tabCallBtn').addEventListener('click', () => switchDetailTab('call'));
+        document.getElementById('tabEditBtn').addEventListener('click', () => switchDetailTab('edit'));
+        document.getElementById('jumpToEditBtn').addEventListener('click', () => switchDetailTab('edit'));
+        document.getElementById('jumpEditFromEmptyBtn').addEventListener('click', () => switchDetailTab('edit'));
+
+        // タイムスタンプタップでシーク
+        document.getElementById('callLinesContainer').addEventListener('click', e => {
+          const btn = e.target.closest('[data-seek-sec]');
+          if (!btn) return;
+          const sec = parseInt(btn.dataset.seekSec, 10);
+          if (!isNaN(sec)) seekYt(sec);
+        });
+
+        // 編集画面：今の秒数＆定番MIX挿入
+        document.getElementById('insertTimeBtn').addEventListener('click', () => {
+          const ta = document.getElementById('editCallTextarea');
+          const tag = '[' + formatSec(getYtTime() || 0) + '] ! ';
+          insertAtCursor(ta, tag);
+          showToast(tag.trim() + ' を挿入しました', false);
+        });
+
+        document.querySelectorAll('.tpl-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const tpl = CALL_TEMPLATES[btn.dataset.tpl];
+            if (!tpl) return;
+            insertAtCursor(document.getElementById('editCallTextarea'), tpl.insertText + '\n');
+            showToast(tpl.title + 'を挿入しました', false);
+          });
+        });
+
+        // 編集内容の保存
+        document.getElementById('saveEditBtn').addEventListener('click', () => {
+          if (activeSongId === null) return;
+          const rawYt = document.getElementById('editYtUrlInput').value.trim();
+          const rawSp = document.getElementById('editSpotifyUrlInput').value.trim();
+          const rawAp = document.getElementById('editAppleUrlInput').value.trim();
+          const newTitle = document.getElementById('editTitleInput').value.trim();
+
+          let ytId = '';
+          if (rawYt) {
+            ytId = extractYoutubeId(rawYt);
+            if (!ytId) {
+              showToast('YouTube / YouTube MusicのURL形式を確認してください', true);
+              return;
+            }
+          }
+          if (rawSp && !toSpotifyEmbedUrl(rawSp)) {
+            showToast('Spotifyの曲URL（open.spotify.com/track/...）を入力してください', true);
+            return;
+          }
+          if (rawAp && !toAppleMusicEmbedUrl(rawAp)) {
+            showToast('Apple MusicのURL（music.apple.com/...）を入力してください', true);
+            return;
+          }
+
+          const def = defaultSongsMap.get(activeSongId);
+          const patch = {
+            callText: document.getElementById('editCallTextarea').value,
+            penlight: document.getElementById('editPenlightInput').value.trim(),
+            note: document.getElementById('editNoteInput').value.trim(),
+            youtubeId: ytId,
+            youtubeLabel: ytId ? (ytId === def.youtubeId ? def.youtubeLabel : '登録動画') : '',
+            spotifyUrl: rawSp,
+            appleMusicUrl: rawAp
+          };
+          if (newTitle) patch.title = newTitle;
+
+          updateSongDiff(activeSongId, patch);
+          const updated = getMergedSong(activeSongId);
+          renderSongDetail(updated);
+          renderSongList();
+          showToast('保存しました！', false);
+        });
+
+        // この曲の編集を初期値に戻す（ステータスは維持）
+        document.getElementById('revertSongBtn').addEventListener('click', () => {
+          if (activeSongId === null) return;
+          const current = getMergedSong(activeSongId);
+          const keepStatus = current ? current.status : 'todo';
+          delete userDiffs[activeSongId];
+          if (keepStatus !== 'todo') userDiffs[activeSongId] = { status: keepStatus };
+          saveUserDiffs();
+          renderSongDetail(getMergedSong(activeSongId));
+          renderSongList();
+          showToast('この曲の編集を初期値に戻しました', false);
+        });
+
+        // 前後の曲へ移動
+        function moveDetail(delta) {
+          const list = navOrderedIds.length > 0 ? navOrderedIds : RAW_SONGS.map(r => r[0]);
+          const idx = list.indexOf(activeSongId);
+          const nextId = list[idx + delta];
+          if (nextId !== undefined) {
+            activeSongId = nextId;
+            renderSongDetail(getMergedSong(nextId));
+          }
+        }
+        document.getElementById('prevSongBtn').addEventListener('click', () => moveDetail(-1));
+        document.getElementById('nextSongBtn').addEventListener('click', () => moveDetail(1));
+
+        // コール辞典モーダル
+        const guideModal = document.getElementById('guideModal');
+        const closeGuide = () => {
+          guideModal.classList.add('hidden');
+          if (activeSongId === null) document.body.classList.remove('modal-open');
+        };
+        document.getElementById('openGuideBtn').addEventListener('click', () => {
+          guideModal.classList.remove('hidden');
+          document.body.classList.add('modal-open');
+        });
+        document.getElementById('closeGuideModalBtn').addEventListener('click', closeGuide);
+        guideModal.addEventListener('click', e => { if (e.target.id === 'guideModal') closeGuide(); });
+        document.getElementById('guideContent').addEventListener('click', e => {
+          const btn = e.target.closest('[data-copy-guide]');
+          if (!btn) return;
+          const item = CALL_TEMPLATES[btn.dataset.copyGuide];
+          if (item) {
+            const ok = copyToClipboard(item.insertText);
+            showToast(ok ? 'コピーしました！' : 'コピーに失敗しました', !ok);
+          }
+        });
+
+        // 設定・データ管理モーダル
+        const settingsModal = document.getElementById('settingsModal');
+        const closeSettings = () => {
+          settingsModal.classList.add('hidden');
+          document.getElementById('resetConfirmBox').classList.add('hidden');
+          document.getElementById('resetStep1Btn').classList.remove('hidden');
+          if (activeSongId === null) document.body.classList.remove('modal-open');
+        };
+        document.getElementById('openSettingsBtn').addEventListener('click', () => {
+          settingsModal.classList.remove('hidden');
+          document.body.classList.add('modal-open');
+        });
+        document.getElementById('closeSettingsModalBtn').addEventListener('click', closeSettings);
+        settingsModal.addEventListener('click', e => { if (e.target.id === 'settingsModal') closeSettings(); });
+
+        // テーマ切替
+        document.getElementById('themeDarkBtn').addEventListener('click', () => applyTheme('dark'));
+        document.getElementById('themeLightBtn').addEventListener('click', () => applyTheme('light'));
+
+        // JSONエクスポート（差分データ）
+        document.getElementById('exportJsonBtn').addEventListener('click', () => {
+          try {
+            const payload = { app: 'AKB48_YOYOGI_2027_DIFF', exportedAt: new Date().toISOString(), diffs: userDiffs };
+            const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'akb48-yoyogi2027-backup.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast('バックアップを保存しました', false);
+          } catch (err) {
+            showToast('書き出しに失敗しました', true);
+          }
+        });
+
+        document.getElementById('copyJsonBtn').addEventListener('click', () => {
+          const payload = { app: 'AKB48_YOYOGI_2027_DIFF', exportedAt: new Date().toISOString(), diffs: userDiffs };
+          const ok = copyToClipboard(JSON.stringify(payload));
+          showToast(ok ? 'バックアップJSONをコピーしました' : 'コピーに失敗しました', !ok);
+        });
+
+        // JSONインポート（差分形式・旧全曲配列形式の両方に対応）
+        function importJson(raw) {
+          try {
+            const parsed = JSON.parse(raw);
+            if (parsed && parsed.diffs && typeof parsed.diffs === 'object') {
+              userDiffs = parsed.diffs;
+            } else if (parsed && Array.isArray(parsed.songs)) {
+              userDiffs = {};
+              parsed.songs.forEach(s => {
+                if (s && typeof s.id === 'number') updateSongDiff(s.id, s);
+              });
+            } else {
+              showToast('正しいバックアップJSONではありません', true);
+              return;
+            }
+            saveUserDiffs();
+            updateHeaderAndControls();
+            renderSongList();
+            document.getElementById('importJsonText').value = '';
+            closeSettings();
+            showToast('バックアップを読み込みました！', false);
+          } catch (err) {
+            showToast('JSONの読み込みに失敗しました', true);
+          }
+        }
+
+        document.getElementById('importJsonFile').addEventListener('change', e => {
+          const file = e.target.files && e.target.files[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = () => importJson(String(reader.result || ''));
+          reader.readAsText(file);
+          e.target.value = '';
+        });
+
+        document.getElementById('importJsonTextBtn').addEventListener('click', () => {
+          const raw = document.getElementById('importJsonText').value.trim();
+          if (!raw) {
+            showToast('JSONテキストを入力してください', true);
+            return;
+          }
+          importJson(raw);
+        });
+
+        // 2段階初期化
+        document.getElementById('resetStep1Btn').addEventListener('click', () => {
+          document.getElementById('resetStep1Btn').classList.add('hidden');
+          document.getElementById('resetConfirmBox').classList.remove('hidden');
+        });
+        document.getElementById('resetConfirmCancelBtn').addEventListener('click', () => {
+          document.getElementById('resetConfirmBox').classList.add('hidden');
+          document.getElementById('resetStep1Btn').classList.remove('hidden');
+        });
+        document.getElementById('resetConfirmExecBtn').addEventListener('click', () => {
+          userDiffs = {};
+          try { localStorage.removeItem(DIFF_STORAGE_KEY); } catch (e) {}
+          updateHeaderAndControls();
+          renderSongList();
+          closeSettings();
+          showToast('初期化しました', false);
+        });
+      }
+
+      // ============================================================
+      // 14. 起動
+      // ============================================================
+      function init() {
+        initTheme();
+        initDefaultSongs();
+        userDiffs = loadUserDiffs();
+        renderGuideModal();
+        updateHeaderAndControls();
+        renderSongList();
+        bindEvents();
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    })();
+  </script>
+</body>
+</html>
